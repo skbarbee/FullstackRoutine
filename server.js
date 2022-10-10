@@ -9,6 +9,8 @@ const UserRouter = require('./controllers/user')
 const User = require("./models/user")
 const Task = require("./models/task")
 const Routine = require("./models/routine")
+const Affirmation = require("./models/affirmation")
+
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
 
