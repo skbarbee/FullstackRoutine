@@ -5,7 +5,7 @@ const mongoose = require('./connection')
 const User = require('./user')
 
 // destructure the schema and model constructors from mongoose
-const { Schema, model } = mongoose
+const { Schema } = mongoose
 
 const taskSchema = new Schema(
 	{
@@ -13,7 +13,7 @@ const taskSchema = new Schema(
 		complete: { type: Boolean, default: false, required: true },
         type: { 
 			type: String,
-			enum:  ['dailyTask','weeklyGoals'],
+			enum:  ['daily','weekly'],
 			required: true },
 		owner: {
 			type: Schema.Types.ObjectID,
@@ -23,9 +23,9 @@ const taskSchema = new Schema(
 	{ timestamps: true }
 )
 
-const Task = model('Task', taskSchema)
+
 
 /////////////////////////////////
 // Export our Model
 /////////////////////////////////
-module.exports = Task
+module.exports = taskSchema

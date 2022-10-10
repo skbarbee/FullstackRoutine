@@ -10,7 +10,7 @@ const { Schema, model } = mongoose
 const routineSchema = new Schema(
 	{
 		title: { type: String, required: true },
-		task: {taskSchema}
+		task: [taskSchema]
 	}
 )
 
