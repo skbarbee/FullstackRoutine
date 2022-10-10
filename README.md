@@ -34,7 +34,7 @@ As a user I want the ability to...
 ## Entity Relationship Diagrams
 ![slide](/imageFiles/ERDModels.jpg)
 ![slide](/imageFiles/restfulRoutes.jpg)
-
+![slide](/imageFiles/apiSeedData.jpg)
 
 ## Schedule
 ![slide](/imageFiles/planning.jpg)
