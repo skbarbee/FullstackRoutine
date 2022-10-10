@@ -19,7 +19,15 @@ As a user I want the ability to...
   - have reminders 
   - don't like your affirmations, randomize a new one
     
-    
+## Technology Used
+  - HTML
+  - CSS
+  - Express.js
+  - LiquidJS
+  - Mongoose
+  - Bootstrap
+  - API (https://www.weatherbit.io/api)
+  
 ## Game Wire Frame
 ![slide](/imageFiles/DailyRoutineApplication.jpg)
 ![slide](/imageFiles/HomePage.jpg)
