@@ -1,9 +1,7 @@
 // Import Dependencies
 const express = require('express')
 const User = require("../models/user")
-const Task = require("../models/task")
 const Routine = require("../models/routine")
-const Affirmation = require("../models/affirmation")
 
 // Create router
 const router = express.Router()
@@ -25,13 +23,16 @@ router.use((req, res, next) => {
 // Routes
 
 // index ALL
+// GET request
 router.get('/', (req, res) => {
-	Example.find({})
-		.then(examples => {
+	Routine.find({})
+		.populate("task.owner","username")
+		.then(routine => {
 			const username = req.session.username
 			const loggedIn = req.session.loggedIn
 			
-			res.render('examples/index', { examples, username, loggedIn })
+			// res.render('examples/index', { examples, username, loggedIn })
+			res.json({ routine:routine })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
@@ -42,7 +43,7 @@ router.get('/', (req, res) => {
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
-	Example.find({ owner: userId })
+	Routine.find({ owner: userId })
 		.then(examples => {
 			res.render('examples/index', { examples, username, loggedIn })
 		})
