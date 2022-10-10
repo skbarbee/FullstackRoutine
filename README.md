@@ -4,17 +4,20 @@ This application is a full stack application where users can track their daily r
 
 ## User Stories
 As a user I want the ability to...
-    - create a daily routine
-	- check off and visibily see that I have done something
-	- create weekly routines
-	- add/edit task
-	-have daily affirmation when I look at all my task 
+  - log in 
+  - create daily routines
+  - check off and visbily see task completed
+  - show routines individually
+  - add and edit task
+  - sign up
+  - see daily affirmations on the index page 
 
 ## User Stretch	
   - have a running log 
   - create smaller task from a bigger one
   - see both a daily affirmation and the weather 
   - have reminders 
+  - don't like your affirmations, randomize a new one
     
     
 ## Game Wire Frame
