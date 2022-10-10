@@ -9,16 +9,16 @@ const router = express.Router()
 // Router Middleware
 // Authorization middleware
 // If you have some resources that should be accessible to everyone regardless of loggedIn status, this middleware can be moved, commented out, or deleted. 
-router.use((req, res, next) => {
-	// checking the loggedIn boolean of our session
-	if (req.session.loggedIn) {
-		// if they're logged in, go to the next thing(thats the controller)
-		next()
-	} else {
-		// if they're not logged in, send them to the login page
-		res.redirect('/auth/login')
-	}
-})
+// router.use((req, res, next) => {
+// 	// checking the loggedIn boolean of our session
+// 	if (req.session.loggedIn) {
+// 		// if they're logged in, go to the next thing(thats the controller)
+// 		next()
+// 	} else {
+// 		// if they're not logged in, send them to the login page
+// 		res.redirect('/auth/login')
+// 	}
+// })
 
 // Routes
 
@@ -26,10 +26,10 @@ router.use((req, res, next) => {
 // GET request
 router.get('/', (req, res) => {
 	Routine.find({})
-		.populate("task.owner","username")
+		
 		.then(routine => {
-			const username = req.session.username
-			const loggedIn = req.session.loggedIn
+			// const username = req.session.username
+			// const loggedIn = req.session.loggedIn
 			
 			// res.render('examples/index', { examples, username, loggedIn })
 			res.json({ routine:routine })
@@ -44,8 +44,9 @@ router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
 	Routine.find({ owner: userId })
-		.then(examples => {
-			res.render('examples/index', { examples, username, loggedIn })
+		.then(routine => {
+			// res.render('examples/index', { examples, username, loggedIn })
+			res.json({ routine:routine })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
@@ -55,21 +56,45 @@ router.get('/mine', (req, res) => {
 // new route -> GET route that renders our page with the form
 router.get('/new', (req, res) => {
 	const { username, userId, loggedIn } = req.session
-	res.render('examples/new', { username, loggedIn })
+	// res.render('routine/new', { username, loggedIn })
 })
 
 // create -> POST route that actually calls the db and makes a new document
 router.post('/', (req, res) => {
-	req.body.ready = req.body.ready === 'on' ? true : false
+	// req.body.ready = req.body.ready === 'on' ? true : false
 
-	req.body.owner = req.session.userId
-	Example.create(req.body)
-		.then(example => {
-			console.log('this was returned from create', example)
-			res.redirect('/examples')
+	// req.body.owner = req.session.userId
+	
+		// .populate("task.owner","username")
+	// .populate("task.complete")
+	// .populate("task.type")
+	
+	// const theRoutine = { title: req.body.title, listItem:req.body.listItem}
+	// const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
+
+	console.log('the routine is being created',req.body)
+	Routine.create({
+		title: req.body.title,
+		listItem:[
+			{
+				task: req.body.task,
+				complete: req.body.complete,
+				type: req.body.type,
+				owner: req.body.owner
+			
+
+			}
+		]
+})
+		.then(routine => {
+			console.log('this was returned from create', routine)
+			// res.redirect('/examples')
+			res.status(201)
+
 		})
 		.catch(error => {
-			res.redirect(`/error?error=${error}`)
+			// res.redirect(`/error?error=${error}`)
+			console.log(error)
 		})
 })
 

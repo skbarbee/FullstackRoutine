@@ -14,18 +14,25 @@ const Task = require('./task')
 const db = mongoose.connection
 console.log('db in seed', db)
 db.on('open', () => {
-	const seedUser =[
-		{username:"Sarah", password:"user1"},
-		{username:"Lauren", password:"user2"},
-		{username:"Melanie", password:"user3"}
+	//  const seedUser =[
+	//  	{username:"Sarah", password:"password"},
+	//  	{username:"Lauren", password:"password"},
+	//  	{username:"Melanie", password:"password"}
 
+	//  ]
+	const sarahRoutine =[
+		{title:"Sarah's Routine", listItem:[
+			{task:"brush teeth", complete:false, type:"daily", owner:"63446c88ef93fe950f1324b3" },
+			{task:"take meds", complete:true, type:"daily", owner:"63446c88ef93fe950f1324b3" },
+			{task:"work on project", complete:false, type:"weekly", owner:"63446c88ef93fe950f1324b3" }
+		]}
 	]
-	
-User.deleteMany({})
-.then((deletedUsers) =>{
-	console.log('this is what .deleteMany returns', deletedUsers)
-	// Seed Starter users
-	User.create(seedUser)
+User.deleteMany({})	
+Routine.deleteMany({})
+.then((deletedRoutines) =>{
+	console.log('this is what .deleteMany returns', deletedRoutines)
+	// Seed Starter routine
+	Routine.create(sarahRoutine)
 	.then((data) => {
 	console.log('Here are the new seed users',data)
 	//always remember to close connection to db 
