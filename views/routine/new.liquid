@@ -3,7 +3,7 @@
 <div class="container-sm">
     <form action="/routine" method="POST">
         <fieldset>
-            <legend>Create New Example</legend>
+            <legend>Create New Routine</legend>
             <label class="form-label">Title: </label>
             <input 
                 type="text" 
@@ -11,27 +11,27 @@
                 placeholder="enter example title"
                 class="form-control"
             >
-            <label class="form-label">Body:</label>
+            <label class="form-label">Task:</label>
             <input 
                 type="text" 
                 name="body" 
-                placeholder="enter example body" 
+                placeholder="enter task" 
                 class="form-control"
             >
-            <label class="form-label">Amount:</label>
-            <input 
-                type="number" 
-                name="amount" 
-                class="form-control"
-            >
-            <label class="form-label">Ready:</label>
+            <label class="form-label">Daily:</label>
             <input 
                 type="checkbox" 
-                name="ready" 
+                name="task.type.daily" 
                 class="form-check-input"
-            >
+            > 
+            <label class="form-label">Weekly:</label>
+            <input 
+                type="checkbox" 
+                name="task.type.weekly" 
+                class="form-check-input"
+            > 
         </fieldset>
-        <input type="submit" value="Create New Example" class="btn btn-success">
+        <input type="submit" value="Create New Routine" class="btn btn-success">
     </form>
 </div>
 {% endblock %}
