@@ -128,17 +128,17 @@ router.get('/:id', (req, res) => {
 		})
 })
 
-// // delete route
-// router.delete('/:id', (req, res) => {
-// 	const routineId = req.params.id
-// 	Routine.findByIdAndRemove(routineId)
-// 		.then(routine => {
-// 			res.redirect('/routine')
-// 		})
-// 		.catch(error => {
-// 			res.redirect(`/error?error=${error}`)
-// 		})
-// })
+// delete route
+router.delete('/:id', (req, res) => {
+	const routineId = req.params.id
+	Routine.findByIdAndRemove(routineId)
+		.then(routine => {
+			res.redirect('/routine')
+		})
+		.catch(error => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
 
 // Export the Router
 module.exports = router
