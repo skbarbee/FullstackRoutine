@@ -9,12 +9,16 @@
                 {{ routine.title }}
             </h5>
             <div class="card-body"></div>
-            {% for task in listItems %}
-            {{forloop.index}}. {{listItems.task}}
-
-           <h6>{{routine.listItems.task}}</h6>
-           {% endfor %}
+          
+            {% for task in routine.listItems %} 
+            <ul class="list-group list-group">
+            <li>{{task.task}}</li>
+            <li>{{task.type}}</li>
+            <li>{{task.complete}}</li>
+             {% endfor %} 
+             </ul>
             </div>
+
            {% endfor %} 
         </div>
         

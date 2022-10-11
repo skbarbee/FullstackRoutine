@@ -146,11 +146,11 @@ router.delete('/:id', (req, res) => {
 ///// ROUTES TO GET TO VIEW PAGES
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-// new route -> GET route that renders our page with the form
-// router.get('/new', (req, res) => {
-// 	const { username, userId, loggedIn } = req.session
-// 	// res.render('routine/new', { username, loggedIn })
-// })
+//new route -> GET route that renders our page with the form
+router.get('/new', (req, res) => {
+	const { username, userId, loggedIn } = req.session
+	res.render('routine/new', { username, loggedIn })
+})
 
 
 // // edit route -> GET that takes us to the edit form view
