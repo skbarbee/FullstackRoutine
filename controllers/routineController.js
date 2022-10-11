@@ -27,10 +27,10 @@ const router = express.Router()
 router.get('/', (req, res) => {
 	Routine.find({})
 		// .populate({
-		// 	path: 'listItem',
-		// 	populate: {path: 'task',
-		// 				model: 'Routine'}
+		// 	path: 'listItem', select:"task"
+			
 		// })
+		.populate("listItem", { strict: false })
 
 		.then(routine => {
 			const username = req.session.username
@@ -74,7 +74,7 @@ router.post('/', (req, res) => {
 	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
 	const theRoutine = { title: req.body.title, listItem:req.body.listItem[theTask]}
 	console.log("this is the task",theTask)
-	Routine.create(req.body)
+	Routine.create(req.body, theRoutine, the)
 	
 		.then(routine => {
 			console.log('the routine is being created\n',routine)
@@ -123,14 +123,15 @@ router.post('/:id', (req, res) => {
 	// req.body.ready = req.body.ready === 'on' ? true : false
 	req.body.owner = req.session.userId
 	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
-	Routine.findByIdAndUpdate(routineId, req.body, { new: true })
+	Routine.findByIdAndUpdate(routineId, req.body, { new: true } )
 		.then(routine =>{
 			console.log("this is body", req.body)
-			routine.listItem.push(req.body)
+			routine.listItem.addToSet(req.body)
 			console.log("this is the list item", routine.listItem)
 			console.log("this is the new routine", routine)
 			console.log("this is the routine id", routine.id)
-			res.json({ routine: routine })
+			res.status(201).json({ routine: routine.toObject() })
+			
 		})
 	
 	
