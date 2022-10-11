@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
 		})
 })
 
-// index that shows only the user's routine
+// // index that shows only the user's routine
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
@@ -93,7 +93,7 @@ router.post('/', (req, res) => {
 // 	const routineId = req.params.id
 // 	Routine.findById(routineId)
 // 		.then(routine => {
-// 			// res.render('routine/edit', { routine})
+// 			res.render('routine/edit', { routine})
 // 		})
 // 		.catch((error) => {
 // 			res.redirect(`/error?error=${error}`)
@@ -114,18 +114,19 @@ router.post('/', (req, res) => {
 // 		})
 // })
 
-// // show route
-// router.get('/:id', (req, res) => {
-// 	const routineId = req.params.id
-// 	routine.findById(routineId)
-// 		.then(routine => {
-//             const {username, loggedIn, userId} = req.session
-// 		// 	res.render('routine/show', { routine, username, loggedIn, userId })
-// 		// })
-// 		.catch((error) => {
-// 			res.redirect(`/error?error=${error}`)
-// 		})
-// })
+// show route
+router.get('/:id', (req, res) => {
+	const routineId = req.params.id
+	Routine.findById(routineId)
+		.then(routine => {
+            const {username, loggedIn, userId} = req.session
+		// 	res.render('routine/show', { routine, username, loggedIn, userId })
+		res.json({ routine:routine })
+		})
+		.catch((error) => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
 
 // // delete route
 // router.delete('/:id', (req, res) => {
