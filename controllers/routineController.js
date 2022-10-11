@@ -70,7 +70,7 @@ router.post('/', (req, res) => {
 
 	req.body.owner = req.session.userId
 	const theRoutine = { title: req.body.title, listItem:req.body.listItem}
-	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
+	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
 
 	console.log('the routine is being created',theRoutine, theTask)
 	Routine.create(req.body)
@@ -78,7 +78,7 @@ router.post('/', (req, res) => {
 		.then(routine => {
 			console.log('this was returned from create', routine)
 			// res.redirect('/routine')
-			res.status(201)
+			res.sendStatus(201)
 
 		})
 		.catch(error => {

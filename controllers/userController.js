@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
 				const result = await bcrypt.compare(password, user.password)
 
 				if (result) {
-					console.log('the user', user);
+					console.log('the user', user, 'the password', password);
 					
 					// store some properties in the session
 					req.session.username = user.username
@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
 
 					console.log('session user id', req.session.userId)
 					// redirect to /examples if login is successful
-					res.redirect('/')
+					res.redirect('/routine')
 				} else {
 					// send an error if the password doesnt match
 					res.redirect('/error?error=username%20or%20password%20incorrect')
