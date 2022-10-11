@@ -27,11 +27,11 @@ const router = express.Router()
 router.get('/', (req, res) => {
 	Routine.find({})
 		// .populate({
-		// 	path: "listItem",
-		// 	populate:{
-		// 		path:"task"		
-		// 	}
+		// 	path: 'listItem',
+		// 	populate: {path: 'task',
+		// 				model: 'Routine'}
 		// })
+
 		.then(routine => {
 			const username = req.session.username
 			const loggedIn = req.session.loggedIn
@@ -40,7 +40,8 @@ router.get('/', (req, res) => {
 			res.json({ routine:routine })
 		})
 		.catch(error => {
-			res.redirect(`/error?error=${error}`)
+			// res.redirect(`/error?error=${error}`)
+			console.log(error)
 		})
 })
 
@@ -69,14 +70,15 @@ router.post('/', (req, res) => {
 	// req.body.ready = req.body.ready === 'on' ? true : false
 
 	req.body.owner = req.session.userId
-	const theRoutine = { title: req.body.title, listItem:req.body.listItem}
-	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
-
-	console.log('the routine is being created',theRoutine, theTask)
+	
+	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
+	const theRoutine = { title: req.body.title, listItem:req.body.listItem[theTask]}
+	console.log("this is the task",theTask)
 	Routine.create(req.body)
 	
 		.then(routine => {
-			console.log('this was returned from create', routine)
+			console.log('the routine is being created\n',routine)
+			console.log('this is the sesssion id\n',req.session.userId, 'this is the body owner\n', req.body.owner)
 			// res.redirect('/routine')
 			res.sendStatus(201)
 
@@ -114,6 +116,29 @@ router.put('/:id', (req, res) => {
 		})
 })
 
+// update routine with new task
+//find routine by Id then CREATE a new task 
+router.post('/:id', (req, res) => {
+	const routineId= req.params.id
+	// req.body.ready = req.body.ready === 'on' ? true : false
+	req.body.owner = req.session.userId
+	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
+	Routine.findByIdAndUpdate(routineId, req.body, { new: true })
+		.then(routine =>{
+			console.log("this is body", req.body)
+			routine.listItem.push(req.body)
+			console.log("this is the list item", routine.listItem)
+			console.log("this is the new routine", routine)
+			console.log("this is the routine id", routine.id)
+			res.json({ routine: routine })
+		})
+	
+	
+		.catch((error) => {
+			// res.redirect(`/error?error=${error}`)
+			console.log(error)
+		})
+})
 // show route
 router.get('/:id', (req, res) => {
 	const routineId = req.params.id
