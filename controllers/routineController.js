@@ -100,19 +100,19 @@ router.post('/', (req, res) => {
 // 		})
 // })
 
-// // update route
-// router.put('/:id', (req, res) => {
-// 	const routineId = req.params.id
-// 	req.body.ready = req.body.ready === 'on' ? true : false
+// update route
+router.put('/:id', (req, res) => {
+	const routineId= req.params.id
+	req.body.ready = req.body.ready === 'on' ? true : false
 
-// 	Routine.findByIdAndUpdate(RoutineId, req.body, { new: true })
-// 		.then(routine => {
-// 			res.redirect(`/routine/${routine.id}`)
-// 		})
-// 		.catch((error) => {
-// 			res.redirect(`/error?error=${error}`)
-// 		})
-// })
+	Routine.findByIdAndUpdate(routineId, req.body, { new: true })
+		.then(routine => {
+			res.redirect(`/routine/${routine.id}`)
+		})
+		.catch((error) => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
 
 // show route
 router.get('/:id', (req, res) => {
