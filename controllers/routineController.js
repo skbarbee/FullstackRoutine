@@ -133,6 +133,9 @@ router.post('/:id', (req, res) => {
 			res.status(201).json({ routine: routine.toObject() })
 			
 		})
+		.then(routine =>{
+			res.redirect(`/routine/${routine.id}`)
+		})
 	
 	
 		.catch((error) => {
