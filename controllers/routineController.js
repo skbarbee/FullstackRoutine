@@ -20,24 +20,28 @@ const router = express.Router()
 // 	}
 // })
 
-// Routes
+////////////////////////////////////////////////////////////////////////////////////////////////
+///// ROUTES
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-// index ALL
-// GET request
+
+///////////////////////////////
+///// INDEX ALL: GET REQUEST
+///////////////////////////////
 router.get('/', (req, res) => {
 	Routine.find({})
 		// .populate({
 		// 	path: 'listItem', select:"task"
 			
 		// })
-		.populate("listItem", { strict: false })
+		.populate("listItems")
 
-		.then(routine => {
+		.then(routines => {
 			const username = req.session.username
 			const loggedIn = req.session.loggedIn
 			
-			// res.render('routine/index', { routine, username, loggedIn })
-			res.json({ routine:routine })
+			res.render('routine/index', { routines, username, loggedIn })
+			// res.json({ routines:routines })
 		})
 		.catch(error => {
 			// res.redirect(`/error?error=${error}`)
@@ -45,19 +49,102 @@ router.get('/', (req, res) => {
 		})
 })
 
-// // index that shows only the user's routine
+///////////////////////////////
+///// INDEX USER: GET REQUEST
+///////////////////////////////
+
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
 	Routine.find({ owner: userId })
 		.then(routine => {
-			// res.render('routine/index', { routine, username, loggedIn })
-			res.json({ routine:routine })
+			res.render('routine/index', { routine, username, loggedIn })
+			// res.json({ routine:routine })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
+
+///////////////////////////////
+///// CREATE NEW ROUTINE: POST ROUTE
+///////////////////////////////
+
+router.post('/', (req, res) => {
+	// req.body.ready = req.body.ready === 'on' ? true : false
+
+	req.body.owner = req.session.userId
+	
+	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
+	const theRoutine = { title: req.body.title, listItems:req.body.listItems}
+	console.log("this is the task",theTask)
+	Routine.create(req.body)
+	
+		.then(routine => {
+			console.log('the routine is being created\n',routine)
+			console.log('this is the sesssion id\n',req.session.userId, 'this is the body owner\n', req.body.owner)
+			res.redirect('/routine')
+			
+
+		})
+		.catch(error => {
+			// res.redirect(`/error?error=${error}`)
+			console.log(error)
+		})
+})
+
+
+
+///////////////////////////////
+///// UPDATE Routine: PUT ROUTE
+///////////////////////////////
+
+router.put('/:id', (req, res) => {
+	const routineId= req.params.id
+	req.body.ready = req.body.ready === 'on' ? true : false
+
+	Routine.findByIdAndUpdate(routineId, req.body, { new: true })
+		.then(routine => {
+			res.redirect(`/routine/${routine.id}`)
+		})
+		.catch((error) => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
+
+
+///////////////////////////////
+/////SHOW EXISITING ROUTING-GET
+///////////////////////////////
+router.get('/:id', (req, res) => {
+	const routineId = req.params.id
+	Routine.findById(routineId)
+		.then(routine => {
+            const {username, loggedIn, userId} = req.session
+		// 	res.render('routine/show', { routine, username, loggedIn, userId })
+		res.json({ routine:routine })
+		})
+		.catch((error) => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
+
+///////////////////////////////
+/////DELETE ROUTINE: DELETE
+///////////////////////////////
+router.delete('/:id', (req, res) => {
+	const routineId = req.params.id
+	Routine.findByIdAndRemove(routineId)
+		.then(routine => {
+			res.redirect('/routine')
+		})
+		.catch(error => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
+////////////////////////////////////////////////////////////////////////////////////////////////
+///// ROUTES TO GET TO VIEW PAGES
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 // new route -> GET route that renders our page with the form
 // router.get('/new', (req, res) => {
@@ -65,29 +152,6 @@ router.get('/mine', (req, res) => {
 // 	// res.render('routine/new', { username, loggedIn })
 // })
 
-// create -> POST route that actually calls the db and makes a new document
-router.post('/', (req, res) => {
-	// req.body.ready = req.body.ready === 'on' ? true : false
-
-	req.body.owner = req.session.userId
-	
-	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
-	const theRoutine = { title: req.body.title, listItem:req.body.listItem[theTask]}
-	console.log("this is the task",theTask)
-	Routine.create(req.body, theRoutine, the)
-	
-		.then(routine => {
-			console.log('the routine is being created\n',routine)
-			console.log('this is the sesssion id\n',req.session.userId, 'this is the body owner\n', req.body.owner)
-			// res.redirect('/routine')
-			res.sendStatus(201)
-
-		})
-		.catch(error => {
-			// res.redirect(`/error?error=${error}`)
-			console.log(error)
-		})
-})
 
 // // edit route -> GET that takes us to the edit form view
 // router.get('/:id/edit', (req, res) => {
@@ -102,72 +166,7 @@ router.post('/', (req, res) => {
 // 		})
 // })
 
-// update route
-router.put('/:id', (req, res) => {
-	const routineId= req.params.id
-	req.body.ready = req.body.ready === 'on' ? true : false
-
-	Routine.findByIdAndUpdate(routineId, req.body, { new: true })
-		.then(routine => {
-			res.redirect(`/routine/${routine.id}`)
-		})
-		.catch((error) => {
-			res.redirect(`/error?error=${error}`)
-		})
-})
-
-// update routine with new task
-//find routine by Id then CREATE a new task 
-router.post('/:id', (req, res) => {
-	const routineId= req.params.id
-	// req.body.ready = req.body.ready === 'on' ? true : false
-	req.body.owner = req.session.userId
-	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
-	Routine.findByIdAndUpdate(routineId, req.body, { new: true } )
-		.then(routine =>{
-			console.log("this is body", req.body)
-			routine.listItem.addToSet(req.body)
-			console.log("this is the list item", routine.listItem)
-			console.log("this is the new routine", routine)
-			console.log("this is the routine id", routine.id)
-			res.status(201).json({ routine: routine.toObject() })
-			
-		})
-		.then(routine =>{
-			res.redirect(`/routine/${routine.id}`)
-		})
-	
-	
-		.catch((error) => {
-			// res.redirect(`/error?error=${error}`)
-			console.log(error)
-		})
-})
-// show route
-router.get('/:id', (req, res) => {
-	const routineId = req.params.id
-	Routine.findById(routineId)
-		.then(routine => {
-            const {username, loggedIn, userId} = req.session
-		// 	res.render('routine/show', { routine, username, loggedIn, userId })
-		res.json({ routine:routine })
-		})
-		.catch((error) => {
-			res.redirect(`/error?error=${error}`)
-		})
-})
-
-// delete route
-router.delete('/:id', (req, res) => {
-	const routineId = req.params.id
-	Routine.findByIdAndRemove(routineId)
-		.then(routine => {
-			res.redirect('/routine')
-		})
-		.catch(error => {
-			res.redirect(`/error?error=${error}`)
-		})
-})
-
-// Export the Router
+////////////////////////////////////////////////////////////////////////////////////////////////
+///// EXPORT THE ROUTER
+////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = router

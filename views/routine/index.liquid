@@ -1,20 +1,23 @@
 {% layout 'layout.liquid'%}
 {% block content %}
 <div>
-    <h2 class="display-6">Your Routine</h2>
+    <h2 class="display-6">Let's Take a Look at Your Routine</h2>
     <div class="row">
-        {% for routine in routine %}
+        {% for routine in routines %}
         <div class="card" style="width: 18rem;">
-            <h5 class="card-header">{{ routine.title }}</h5>
-            <div class="card-body">
-                <h5 class="card-title">
-                    Ready?: {{ routine.listItem }}
-                </h5>
-         
-                </a>
+            <h5 class="card-header">
+                {{ routine.title }}
+            </h5>
+            <div class="card-body"></div>
+            {% for task in listItems %}
+            {{forloop.index}}. {{listItems.task}}
+
+           <h6>{{routine.listItems.task}}</h6>
+           {% endfor %}
             </div>
+           {% endfor %} 
         </div>
-        {% endfor %}
+        
     </div>
-</div>
+   
 {% endblock %}

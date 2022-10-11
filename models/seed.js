@@ -21,7 +21,7 @@ db.on('open', () => {
 
 	//  ]
 	const sarahRoutine =[
-		{title:"Sarah's Routine", listItem:[
+		{title:"Sarah's Routine", listItems:[
 			{task:"brush teeth", complete:false, type:"daily", owner:"63446c88ef93fe950f1324b3" },
 			{task:"take meds", complete:true, type:"daily", owner:"63446c88ef93fe950f1324b3" },
 			{task:"work on project", complete:false, type:"weekly", owner:"63446c88ef93fe950f1324b3" }
@@ -34,7 +34,7 @@ Routine.deleteMany({})
 	// Seed Starter routine
 	Routine.create(sarahRoutine)
 	.then((data) => {
-	console.log('Here are the new seed users',data)
+	console.log('Here are the new seed data',data)
 	//always remember to close connection to db 
 	db.close()
 	})

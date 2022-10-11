@@ -22,8 +22,10 @@ router.use((req, res, next) => {
 	}
 })
 
-// Routes
-// update routine with new task
+///////////////////////////////
+/////Add TASK to Exisitng Routine: POST ROUTE
+///////////////////////////////
+
 //find routine by Id then CREATE a new task 
 router.post('/:id', (req, res) => {
 	const routineId= req.params.id
@@ -31,15 +33,17 @@ router.post('/:id', (req, res) => {
 	req.body.owner = req.session.userId
 	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
 	Routine.findByIdAndUpdate(routineId, req.body, { new: true } )
-	.populate("listItems.task")
 		.then(routine =>{
 			console.log("this is body", req.body)
-			routine.listItem.addToSet(req.body)
-			console.log("this is the list item", routine.listItem)
+			routine.listItems.addToSet(req.body)
+			console.log("this is the list item", routine.listItems)
 			console.log("this is the new routine", routine)
 			console.log("this is the routine id", routine.id)
 			res.status(201).json({ routine: routine.toObject() })
 			
+		})
+		.then(routine =>{
+			res.redirect(`/routine/${routine.id}`)
 		})
 	
 	
@@ -48,7 +52,5 @@ router.post('/:id', (req, res) => {
 			console.log(error)
 		})
 })
-
-
 // Export the Router
 module.exports = router
