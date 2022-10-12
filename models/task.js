@@ -14,11 +14,8 @@ const taskSchema = new Schema(
         type: { 
 			type: String,
 			enum:  ['daily','weekly'],
-			required: true },
-		owner: {
-			type: Schema.Types.ObjectId,
-			ref: 'User',
-		}
+			required: true }
+		
 	},
 	{ timestamps: true }
 )

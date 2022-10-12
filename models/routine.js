@@ -10,7 +10,11 @@ const { Schema, model } = mongoose
 const routineSchema = new Schema(
 	{
 		title: String ,
-		listItems: [taskSchema]
+		listItems: [taskSchema],
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: 'User',
+		}
 	}
 )
 
