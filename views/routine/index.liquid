@@ -10,12 +10,12 @@
                 <h5 class="card-body p-4">{{routine.title}}</h5>
                 {% for task in routine.listItems %}
                 <ul class="list-group rounded-0">
-               <li class="list-group-item border-0  align-items-center ps-2">
+               <li class="list-group-item border-1  align-items-center ps-2">
                 <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
                 {{task.task}}
                 {% if task.complete%}
                 <span
-                class="badge bg-info">complete</span>
+                class="badge bg-info flex-end">complete</span>
                 {%else%}
                 <span
                 class="badge bg-danger">not done</span>
@@ -26,7 +26,7 @@
                     <a class="btn btn-info" href="/routine/{{routine.id}}">
                         View {{routine.title}}
                     </a>
-            </div>
+                    
                 </div>
             </div>
         </div>
