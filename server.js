@@ -31,8 +31,9 @@ middleware(app)
 ////////////////////
 
 app.use('/auth', UserRouter)
-app.use('/task', TaskRouter)
 app.use('/routine',RoutineRouter)
+app.use('/task', TaskRouter)
+
 app.use('/affirmation', AffirmationRouter)
 
 

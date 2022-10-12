@@ -1,9 +1,8 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 <div class="container-sm">
-    <form action="/task/{{routine.id}}" method="POST">
-        
-           <fieldset>
+    <form action="/routine/{{ routine.id }}" method="POST">
+        <fieldset>
             <legend>Add a task to your routine</legend>
           
             <label class="form-label">To Do:</label>
@@ -13,7 +12,7 @@
                 placeholder="enter task" 
                 class="form-control"
             >
-            <label class="form-label">Type of Task:</label>
+            <label class="form-label">Type of Routine:</label>
             <input 
                 type="text" 
                 name="type" 
@@ -27,7 +26,7 @@
                 class="form-check-input"
             > 
         </fieldset>
-        <input type="submit" value="Create New Task" class="btn btn-success">
+        <input type="submit" value="Create New Routine" class="btn btn-success">
     </form>
 </div>
 {% endblock %}
