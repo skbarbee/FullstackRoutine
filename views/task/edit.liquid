@@ -4,14 +4,14 @@
     <form action="/task/{{ routine.id }}/{{task.id}}?_method=PUT" method="POST">
         <fieldset>
             <legend>Add a task to your routine</legend>
-         
+         {%for task in routine.listItems%}
             <label class="form-label">To Do:</label>
             <input 
                 type="text" 
                 name="task" 
                 placeholder="enter task" 
                 class="form-control"
-                value="{{routine.task}}"
+                value="{{task.task}}"
             >
             <label class="form-label">Type of Routine:</label>
             <input 
@@ -19,21 +19,22 @@
                 name="type" 
                 placeholder="Daily or Weekly"
                 class="form-control"
-                value="{{routine.type}}"
+                value="{{task.type}}"
             > 
             <label class="form-label">Complete:</label>
             <input 
                 type="checkbox" 
                 name="complete" 
                 class="form-check-input"
-                {% if routine.complete %}
+                {% if task.complete %}
                  checked
                  {% endif %}
                 
 
             > 
         </fieldset>
-        <input type="submit" value="Create New Routine" class="btn btn-success">
+        {% endfor %}
+        <input type="submit" value="Edit Your To-Do" class="btn btn-success">
     </form>
     </div>
 </div>
