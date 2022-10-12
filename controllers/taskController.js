@@ -29,21 +29,24 @@ const router = express.Router()
 //find routine by Id then CREATE a new task 
 router.post('/:id', (req, res) => {
 	const routineId= req.params.id
-	// req.body.ready = req.body.ready === 'on' ? true : false
+	req.body.complete = req.body.complete === 'on' ? true : false
 	req.body.owner = req.session.userId
 	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
-	Routine.findByIdAndUpdate(routineId, req.body, { new: true } )
-		.then(routine =>{
-			console.log("this is body", req.body)
+	Routine.findById(routineId)
+		.then((routine) =>{
+			// console.log("this is body", req.body)
 			routine.listItems.push(req.body)
-			console.log("this is the list item", routine.listItems)
-			console.log("this is the new routine", routine)
-			console.log("this is the routine id", routine.id)
+			//console.log("this is the list item", routine.listItems)
+			//console.log("this is the new routine", routine)
+			//console.log("this is the routine id", routine.id)
+			return routine.save()
 			
-			res.redirect(`/routine/${routine.id}`)
 			
 		})
-			.catch((error) => {
+		.then(routine =>{
+			res.redirect(`/routine/${routine.id}`)
+		})
+		.catch((error) => {
 			// res.redirect(`/error?error=${error}`)
 			console.log(error)
 		})

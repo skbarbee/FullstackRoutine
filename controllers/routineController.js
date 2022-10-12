@@ -53,6 +53,7 @@ router.get('/', (req, res) => {
 router.get('/mine', (req, res) => {
     // find the routines, by ownership
     Routine.find({ owner: req.session.userId })
+	.populate("listItems")
     // then display the routines
         .then(routines => {
             const username = req.session.username
@@ -92,7 +93,7 @@ router.post('/', (req, res) => {
 	
 		.then(routine => {
 			// 
-			res.redirect('/routine/mine')
+			res.redirect('/routine/')
 			// res.sendStatus(201)
 
 		})
@@ -166,10 +167,11 @@ router.delete('/:id', (req, res) => {
 	const routineId = req.params.id
 	Routine.findByIdAndRemove(routineId)
 		.then(routine => {
-			res.redirect('/routine')
+			res.redirect('/routine/mine')
 		})
 		.catch(error => {
-			res.redirect(`/error?error=${error}`)
+			// res.redirect(`/error?error=${error}`)
+			res.send(error)
 		})
 })
 ////////////////////////////////////////////////////////////////////////////////////////////////

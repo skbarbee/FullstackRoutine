@@ -2,8 +2,9 @@
 {% block content %}
    
   <p class="mb-2" style="text-align:center"><span class="h2 me-2">Hello {{username}}</span></p>
-         <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+         <div class="container py-5">
+            <div class="row d-flex">
+ 
         {% for routine in routines %}
             <div class="col col-lg-8 col-xl-6">
             <div class="card rounded-3">
@@ -32,6 +33,7 @@
         </div>
     </div>
     {% endfor %}
+  
 </div>
     
 
