@@ -76,6 +76,7 @@ router.post('/:id', (req, res) => {
 ////EDIT exisiting Task: put ROUTE
 ///////////////////////////////
 router.put('/:routineId/:taskId', (req, res) => {
+	console.log("the route was hit")
 	const routineId= req.params.routineId
 	const taskId = req.params.taskId
 	
@@ -83,12 +84,17 @@ router.put('/:routineId/:taskId', (req, res) => {
 	
 
 	req.body.complete = req.body.complete === 'on' ? true : false
-	Routine.findByIdAndUpdate(taskId, req.body, { new: true })
+	Routine.findById(routineId)
 		.then(routine => {
-			res.redirect(`/routine/${routine.id}`)
+			const theTask = routine.listItems.id(taskId)
+			// console.log('this is the task that was found',theTask)
+			theTask.set(req.body)
+			routine.save()
+			res.redirect(`/routine/${routineId}`)
 		})
 		.catch((error) => {
-			res.redirect(`/error?error=${error}`)
+			// res.redirect(`/error?error=${error}`)
+			console.log(error)
 		})
 })
 // Export the Router
