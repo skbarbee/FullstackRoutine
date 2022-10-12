@@ -11,16 +11,16 @@ const router = express.Router()
 // Router Middleware
 // Authorization middleware
 // If you have some resources that should be accessible to everyone regardless of loggedIn status, this middleware can be moved, commented out, or deleted. 
-router.use((req, res, next) => {
-	// checking the loggedIn boolean of our session
-	if (req.session.loggedIn) {
-		// if they're logged in, go to the next thing(thats the controller)
-		next()
-	} else {
-		// if they're not logged in, send them to the login page
-		res.redirect('/auth/login')
-	}
-})
+// router.use((req, res, next) => {
+// 	// checking the loggedIn boolean of our session
+// 	if (req.session.loggedIn) {
+// 		// if they're logged in, go to the next thing(thats the controller)
+// 		next()
+// 	} else {
+// 		// if they're not logged in, send them to the login page
+// 		res.redirect('/auth/login')
+// 	}
+// })
 
 ///////////////////////////////
 /////Add TASK to Exisitng Routine: POST ROUTE
@@ -35,19 +35,15 @@ router.post('/:id', (req, res) => {
 	Routine.findByIdAndUpdate(routineId, req.body, { new: true } )
 		.then(routine =>{
 			console.log("this is body", req.body)
-			routine.listItems.addToSet(req.body)
+			routine.listItems.push(req.body)
 			console.log("this is the list item", routine.listItems)
 			console.log("this is the new routine", routine)
 			console.log("this is the routine id", routine.id)
-			res.status(201).json({ routine: routine.toObject() })
+			
+			res.redirect(`/routine/${routine.id}`)
 			
 		})
-		.then(routine =>{
-			res.redirect(`/routine/${routine.id}`)
-		})
-	
-	
-		.catch((error) => {
+			.catch((error) => {
 			// res.redirect(`/error?error=${error}`)
 			console.log(error)
 		})

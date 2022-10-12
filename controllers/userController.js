@@ -29,8 +29,8 @@ router.post('/signup', async (req, res) => {
 	User.create(req.body)
 		// if created successfully redirect to login
 		.then((user) => {
-			// res.redirect('/auth/login')
-			res.json({ user: user })
+			res.redirect('/auth/login')
+			// res.json({ user: user })
 		})
 		// if an error occurs, send err
 		.catch((error) => {
@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
 
 					console.log('session user id', req.session.userId)
 					// redirect to /examples if login is successful
-					res.redirect('/routine')
+					res.redirect('/routine/mine')
 				} else {
 					// send an error if the password doesnt match
 					res.redirect('/error?error=username%20or%20password%20incorrect')

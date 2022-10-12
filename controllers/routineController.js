@@ -9,16 +9,16 @@ const router = express.Router()
 // Router Middleware
 // Authorization middleware
 // If you have some resources that should be accessible to everyone regardless of loggedIn status, this middleware can be moved, commented out, or deleted. 
-// router.use((req, res, next) => {
-// 	// checking the loggedIn boolean of our session
-// 	if (req.session.loggedIn) {
-// 		// if they're logged in, go to the next thing(thats the controller)
-// 		next()
-// 	} else {
-// 		// if they're not logged in, send them to the login page
-// 		res.redirect('/auth/login')
-// 	}
-// })
+router.use((req, res, next) => {
+	// checking the loggedIn boolean of our session
+	if (req.session.loggedIn) {
+		// if they're logged in, go to the next thing(thats the controller)
+		next()
+	} else {
+		// if they're not logged in, send them to the login page
+		res.redirect('/auth/login')
+	}
+})
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///// ROUTES
@@ -51,16 +51,19 @@ router.get('/', (req, res) => {
 ///////////////////////////////
 
 router.get('/mine', (req, res) => {
-    // destructure user info from req.session
-    const { username, userId, loggedIn } = req.session
-	Routine.find({ owner: userId })
-		.then(routine => {
-			res.render('routine/index', { routine, username, loggedIn })
-			
-		})
-		.catch(error => {
-			res.redirect(`/error?error=${error}`)
-		})
+    // find the routines, by ownership
+    Routine.find({ owner: req.session.userId })
+    // then display the routines
+        .then(routines => {
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
+
+            // res.status(200).json({ routines: routines })
+            res.render('routine/index', { routines, username, loggedIn, userId })
+        })
+    // or throw an error if there is one
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 //new route -> GET route that renders our page with the form
@@ -86,10 +89,10 @@ router.post('/', (req, res) => {
 
 	console.log('the routine is being created',theRoutine, theTask)
 	Routine.create(req.body,theTask)
-
+	
 		.then(routine => {
-			console.log('this was returned from create', routine)
-			res.redirect('/routine')
+			// 
+			res.redirect('/routine/mine')
 			// res.sendStatus(201)
 
 		})
@@ -99,6 +102,25 @@ router.post('/', (req, res) => {
 		})
 })
 
+// edit route -> GET that takes us to the edit form view
+router.get("/edit/:id", (req, res) => {
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+
+    const routineId = req.params.id
+
+    Routine.findById(routineId)
+        // render the edit form 
+        .then(routine => {
+            res.render('routine/edit', { routine, username, loggedIn, userId })
+        })
+        // redirect if there isn't
+        .catch(err => {
+            res.redirect(`/error?error=${err}`)
+        })
+    // res.send('edit page')
+})
 
 ///////////////////////////////
 ///// UPDATE Routine: PUT ROUTE
@@ -122,7 +144,7 @@ router.put('/:id', (req, res) => {
 
 
 ///////////////////////////////
-/////SHOW EXISITING ROUTING-GET
+/////SHOW EXISITING ROUTINE-GET
 ///////////////////////////////
 router.get('/:id', (req, res) => {
 	const routineId = req.params.id
@@ -154,25 +176,10 @@ router.delete('/:id', (req, res) => {
 ///// ROUTES TO GET TO VIEW PAGES
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-//new route -> GET route that renders our page with the form
-router.get('/new', (req, res) => {
-	const { username, userId, loggedIn } = req.session
-	res.render('routine/new', { username, loggedIn })
-})
 
 
-// // edit route -> GET that takes us to the edit form view
-// router.get('/:id/edit', (req, res) => {
-// 	// we need to get the id
-// 	const routineId = req.params.id
-// 	Routine.findById(routineId)
-// 		.then(routine => {
-// 			res.render('routine/edit', { routine})
-// 		})
-// 		.catch((error) => {
-// 			res.redirect(`/error?error=${error}`)
-// 		})
-// })
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///// EXPORT THE ROUTER
