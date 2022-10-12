@@ -12,7 +12,12 @@ const UserSchema = new Schema(
 		password: { 
 			type: String, 
 			required: true 
+		},
+		zipCode:{
+			type: Number,
+			required: true
 		}
+
 	}
 	// { timestamps: true }
 )
