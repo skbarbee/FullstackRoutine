@@ -21,7 +21,27 @@ const router = express.Router()
 // 		res.redirect('/auth/login')
 // 	}
 // })
-
+// edit route -> GET that takes us to the edit form view
+router.get("/edit/:routineId/:taskId", (req, res) => {
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
+    const routineId= req.params.routineId
+	const taskId = req.params.taskId
+	console.log("edit request called")
+	
+    Routine.findById(routineId)
+        // render the edit form 
+        .then(routine => {
+            res.render('task/edit', { routine, username, loggedIn, userId, theTask })
+        })
+        // redirect if there isn't
+        .catch(err => {
+            res.redirect(`/error?error=${err}`)
+        })
+    // res.send('edit page')
+})
 ///////////////////////////////
 /////Add TASK to Exisitng Routine: POST ROUTE
 ///////////////////////////////
@@ -49,6 +69,26 @@ router.post('/:id', (req, res) => {
 		.catch((error) => {
 			// res.redirect(`/error?error=${error}`)
 			console.log(error)
+		})
+})
+
+///////////////////////////////
+////EDIT exisiting Task: put ROUTE
+///////////////////////////////
+router.put('/:routineId/:taskId', (req, res) => {
+	const routineId= req.params.routineId
+	const taskId = req.params.taskId
+	
+	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
+	
+
+	req.body.complete = req.body.complete === 'on' ? true : false
+	Routine.findByIdAndUpdate(taskId, req.body, { new: true })
+		.then(routine => {
+			res.redirect(`/routine/${routine.id}`)
+		})
+		.catch((error) => {
+			res.redirect(`/error?error=${error}`)
 		})
 })
 // Export the Router

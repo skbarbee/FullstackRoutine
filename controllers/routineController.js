@@ -81,19 +81,14 @@ router.get('/new', (req, res) =>
 ///////////////////////////////
 
 router.post('/', (req, res) => {
-	req.body.complete = req.body.complete === 'on' ? true : false
-
-	req.body.owner = req.session.userId
-	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
-	const theRoutine = { title: req.body.title, listItems:req.body.listItems}
 	
-
-	console.log('the routine is being created',theRoutine, theTask)
-	Routine.create(req.body,theTask)
+	req.body.owner = req.session.userId
+	
+	Routine.create(req.body)
 	
 		.then(routine => {
 			// 
-			res.redirect('/routine/')
+			res.redirect('/routine/mine')
 			// res.sendStatus(201)
 
 		})
@@ -110,7 +105,7 @@ router.get("/edit/:id", (req, res) => {
     const userId = req.session.userId
 
     const routineId = req.params.id
-
+	console.log("this is the get edit in routine")
     Routine.findById(routineId)
         // render the edit form 
         .then(routine => {

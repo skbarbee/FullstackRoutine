@@ -1,18 +1,16 @@
 {% block content %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
-        <a href="/routine" class="navbar-brand">YourDailyRoutine</a>
+        <a class="navbar-brand">YourDailyRoutine</a>
         {% if loggedIn %}
-        <a href="/routine/mine" class="nav-link text-light">Hello {{ username }} </a>
+        <a href="/routine/mine" class="nav-link text-light">{{ username }}'s Routines</a>
         {% endif %}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             {% if loggedIn %}
-                <a href="/routine/mine" class="nav-link text-light">View All</a>
-                <a href="/routine/new" class="nav-link text-light">New</a>
-                <a href="/routine/mine" class="nav-link text-light">Your Routines</a>
+                <a href="/routine/new" class="nav-link text-light">Create a New Routine</a>
                 <a href="/auth/logout" class="nav-link text-light">Log Out</a>
             {% else %}
                 <a href="/auth/signup" class="nav-link text-light">Sign Up</a>
