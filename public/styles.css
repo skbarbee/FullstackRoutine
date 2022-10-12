@@ -1,3 +1,12 @@
+body{
+	background-image: url('background.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+ 	background-position: center ;
+ 	background-size: cover;
+	
+
+}
 .card{
 	margin: 5px;
 }

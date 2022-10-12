@@ -1,7 +1,7 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 <div class="container-sm">
-    <form action="/routine" method="POST">
+    <form action="/routine/" method="POST">
         <fieldset>
             <legend>Create New Routine</legend>
             <label class="form-label">Title: </label>
@@ -14,20 +14,21 @@
             <label class="form-label">To Do:</label>
             <input 
                 type="text" 
-                name="routine.listItems.task" 
+                name="listItems" 
                 placeholder="enter task" 
                 class="form-control"
             >
-            <label class="form-label">Daily:</label>
+            <label class="form-label">Type of Routine:</label>
             <input 
-                type="checkbox" 
-                name="task.type.daily" 
-                class="form-check-input"
+                type="text" 
+                name="type" 
+                placeholder="Daily or Weekly"
+                class="form-control"
             > 
-            <label class="form-label">Weekly:</label>
+            <label class="form-label">Complete:</label>
             <input 
                 type="checkbox" 
-                name="task.type.weekly" 
+                name="complete" 
                 class="form-check-input"
             > 
         </fieldset>
