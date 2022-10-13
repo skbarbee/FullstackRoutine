@@ -1,8 +1,15 @@
 {% layout 'layout.liquid'%}
 {% block content %}
-<div class="section"></div>
-    <p class="mb-2" style="text-align:center"><span class="h2 me-2">Hello {{username}}</span></p>
-       
+
+<header class="masthead">
+  <div class="container h-100 py-5">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <h1> Welcome {{username}}</h1>
+      </div>
+    </div>
+  </div>
+</header>
         <div class="d-flex flex-row py-5">
         {% for routine in routines %}
          <div class="container py-2">

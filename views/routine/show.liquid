@@ -1,12 +1,20 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 
-<p class="mb-2" style="text-align:center">Hello {{username}}</p>
-    <div class="container py-5 h-100">
+<header class="masthead">
+  <div class="container h-100 py-5">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <h1>{{username}}'s {{routine.title}}</h1>
+        </div>
+    </div>
+</div>
+</header>
+    <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-8 col-xl-6">
                 <div class="card rounded-3">
-                    <h5 class="card-body p-4">{{routine.title}}</h5>
+                    <h2 class="card-header text-align-center">{{routine.title}}</h2>
                 {% for task in routine.listItems %}
                 <ul class="list-group rounded-0">
                     <li class="list-group-item border-1  align-items-center ps-2">
@@ -30,7 +38,7 @@
             {% if routine.owner == userId %}
             <container>
             <div class="btn-group py-4 col-md-4 offset-md-9">
-                <a href="/routine/edit/{{ routine.id }}" class="btn btn-primary">Edit</a>
+                <a href="/routine/edit/{{ routine.id }}" class="btn btn-primary">new To-Do</a>
                 <form action="/routine/{{ routine.id }}?_method=DELETE" method="POST">
                 <input type="submit" value="Delete" class="btn btn-danger">
                 </form>
