@@ -53,6 +53,7 @@ router.get('/', (req, res) => {
 
 router.get('/mine', (req, res) => {
     // find the routines, by ownership
+	
     Routine.find({ owner: req.session.userId })
 	.populate("listItems")
 	
@@ -67,6 +68,7 @@ router.get('/mine', (req, res) => {
         })
     // or throw an error if there is one
         .catch(err => res.redirect(`/error?error=${err}`))
+		
 })
 
 //new route -> GET route that renders our page with the form

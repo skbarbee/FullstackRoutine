@@ -10,17 +10,19 @@
     </div>
   </div>
 </header>
-<div class="container d-flex">
-
+<div class="container-xl h-100 py-2 d-flex" id="pageContainer">
+{%- comment -%} affirmation and weather container {%- endcomment -%}
   <div class="d-flex flex-column bd-highlight mb-3">
     <div class="p-2 bd-highlight">Affirmations</div>
     <div class="p-2 bd-highlight">Weather</div>
   </div>
-        <div class="d-flex  ">
+  {%- comment -%} card container {%- endcomment -%}
+  <div class="d-flex flex-grow-1 justify-content-end">
+    
         {% for routine in routines %}
-         <div class="container py-2">
+         <div class="container flex-fill">
             
-            {%- comment -%} <div class="col col-lg-4 col-xl-4"> {%- endcomment -%}
+           
             <div class="card rounded-3 col">
                 <h5 class="card-body p-2">{{routine.title}}</h5>
                 {% for task in routine.listItems %}
@@ -52,7 +54,8 @@
          </div>    
     {% endfor %}
     </div>
-</div>
+    </div>
+  </div>
     
 
 {% endblock %}

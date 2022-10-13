@@ -41,16 +41,24 @@ router.get('/', (req, res) => {
 
 // index that shows random affirmation
 router.get('/random/', (req, res) => {
-    // destructure user info from req.session
+	const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
     const randomNumber = Math.floor((Math.random())* (20-1)+1)
 	console.log("the random number is ", randomNumber)
 	
 	Affirmation.find({ id: (randomNumber) })
 	
 		.then(affirmation => {
-		
-			res.json({affirmation:affirmation})
-			// res.render('examples/index', { examples, username, loggedIn })
+			const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
+			const picture = affirmation.picture
+			const id = affirmation.id
+			const altText = affirmation.altText
+
+            res.json({ affirmation: affirmation })
+            // res.render('affirmation/random', { picture, id, altText, username, loggedIn, userId })
 		})
 		.catch(error => {
 			// res.redirect(`/error?error=${error}`)
