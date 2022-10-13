@@ -10,8 +10,9 @@ const { Schema, model } = mongoose
 
 const affirmationSchema = new Schema(
 	{
-		affirmation: { type: String, required: true },
-		number: {type: Number, required: true}
+		picture: { type: String, required: true },
+		altText:{ type: String, required: true},
+		id: {type: Number, required: true}
 		
 	}
 )

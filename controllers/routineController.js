@@ -2,6 +2,7 @@
 const express = require('express')
 const User = require("../models/user")
 const Routine = require("../models/routine")
+const Affirmation = require("../models/affirmation")
 
 // Create router
 const router = express.Router()
@@ -54,6 +55,7 @@ router.get('/mine', (req, res) => {
     // find the routines, by ownership
     Routine.find({ owner: req.session.userId })
 	.populate("listItems")
+	.populate("affirmations")
     // then display the routines
         .then(routines => {
             const username = req.session.username
