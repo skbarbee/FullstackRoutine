@@ -31,7 +31,7 @@ router.use((req, res, next) => {
 ///////////////////////////////
 router.get('/', (req, res) => {
 	Routine.find({})
-	
+
 		.populate("listItems")
 
 		.then(routines => {
@@ -50,54 +50,73 @@ router.get('/', (req, res) => {
 ///////////////////////////////
 ///// INDEX USER: GET REQUEST
 ///////////////////////////////
-function getAffirmation(number){
-	console.log(`this function called id: ${number}}`)
-	Affirmation.find({ id: (number) })
-
-	.then(affirmation => {
-		const picture = affirmation[0].picture
-		const id = affirmation[0].id
-		const altText = affirmation[0].altText
-		console.log(`${JSON.stringify(affirmation)}`)
-		return (affirmation)
-	})
-
-	.catch(error => {
-		
-		console.log(error)
-
+const getRandomAffirmation = () => {
+	return new Promise((res, rej) => {
+		const randomNumber = Math.floor(Math.random() * (20 - 1) + 1)
+		Affirmation.find({ rando: randomNumber }, (err, doc) => {
+			if (err) rej(err)
+			res(doc)
+		})
 	})
 }
+const getUserRoutines = (user) => {
+	return new Promise((res, rej) => {
+		
+		Routine.find({ owner: user }, (err, doc) => {
+			if (err) rej(err)
+			res(doc)
+		})
+	})
+}
+
 router.get('/mine', (req, res) => {
-    // find the routines, by ownership
-	
-    Routine.find({ owner: req.session.userId })
-	
-	
-    // then display the routines
-	
-        .then(routines => {
-            const username = req.session.username
-            const loggedIn = req.session.loggedIn
-            const userId = req.session.userId
-			const randomNumber = Math.floor((Math.random())* (20-1)+1)
-			const randomAff =  getAffirmation(randomNumber)
-			// console.log(`this is the function within the route ${JSON.stringify(randomAff)}`)
-            // res.send({ routines: routines})
-            res.render('routine/index', { routines, username, loggedIn, userId, randomAff})
-        })
+	// find the routines, by ownership
+	// let affirmation = []
+	// let routines = []
+	const username = req.session.username
+	const loggedIn = req.session.loggedIn
+	const userId = req.session.userId
+
+	Promise.all([getRandomAffirmation(), getUserRoutines(userId)])
+		.then(data => {
+			const picture = data[0][0].picture
+			const id = data[0][0].rando
+			const altText = data[0][0].altText
+			routines = data[1]
+			// console.log(picture, id, altText)
+			// console.log(data[1])
+			res.render('routine/index', {routines , username, loggedIn, userId, picture, id, altText })
+			
+		})
 		
-    // or throw an error if there is one
-        .catch(err => res.redirect(`/error?error=${err}`))
 		
+			
+			// console.table(affirmation)
+// 			console.table(routines)
+// 			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText }))
+		
+		.catch(error => console.error)
+// 
+			
+// 			const picture = affirmation[0][0].picture
+// 			const id = affirmation[0][0].rando
+// 			const altText = affirmation[0][0].altText
+// 			// console.log(picture, id, altText)
+// 			console.table(affirmation)
+// 			console.table(routines)
+// 			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText })
+// 		})
+
+// 		// or throw an error if there is one
+// 		.catch(err => res.redirect(`/error?error=${err}`))
+
 })
 
 //new route -> GET route that renders our page with the form
-router.get('/new', (req, res) => 
-{
-	
-	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
-	const theRoutine = { title: req.body.title, listItems:req.body.listItems}
+router.get('/new', (req, res) => {
+
+	const theTask = { task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId }
+	const theRoutine = { title: req.body.title, listItems: req.body.listItems }
 	const { username, userId, loggedIn } = req.session
 	res.render('routine/new', { username, loggedIn })
 })
@@ -108,11 +127,11 @@ router.get('/new', (req, res) =>
 ///////////////////////////////
 
 router.post('/', (req, res) => {
-	
+
 	req.body.owner = req.session.userId
-	
+
 	Routine.create(req.body)
-	
+
 		.then(routine => {
 			// 
 			res.redirect('/routine/mine')
@@ -127,22 +146,22 @@ router.post('/', (req, res) => {
 
 // edit route -> GET that takes us to the edit form view
 router.get("/edit/:id", (req, res) => {
-    const username = req.session.username
-    const loggedIn = req.session.loggedIn
-    const userId = req.session.userId
+	const username = req.session.username
+	const loggedIn = req.session.loggedIn
+	const userId = req.session.userId
 
-    const routineId = req.params.id
+	const routineId = req.params.id
 	console.log("this is the get edit in routine")
-    Routine.findById(routineId)
-        // render the edit form 
-        .then(routine => {
-            res.render('routine/edit', { routine, username, loggedIn, userId })
-        })
-        // redirect if there isn't
-        .catch(err => {
-            res.redirect(`/error?error=${err}`)
-        })
-    // res.send('edit page')
+	Routine.findById(routineId)
+		// render the edit form 
+		.then(routine => {
+			res.render('routine/edit', { routine, username, loggedIn, userId })
+		})
+		// redirect if there isn't
+		.catch(err => {
+			res.redirect(`/error?error=${err}`)
+		})
+	// res.send('edit page')
 })
 
 ///////////////////////////////
@@ -150,10 +169,10 @@ router.get("/edit/:id", (req, res) => {
 ///////////////////////////////
 
 router.put('/:id', (req, res) => {
-	const routineId= req.params.id
-	
-	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
-	const theRoutine = { title: req.body.title, listItems:req.body.listItems}
+	const routineId = req.params.id
+
+	const theTask = { task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId }
+	const theRoutine = { title: req.body.title, listItems: req.body.listItems }
 
 	req.body.complete = req.body.complete === 'on' ? true : false
 	Routine.findByIdAndUpdate(routineId, req.body, { new: true })
@@ -173,9 +192,9 @@ router.get('/:id', (req, res) => {
 	const routineId = req.params.id
 	Routine.findById(routineId)
 		.then(routine => {
-            const {username, loggedIn, userId} = req.session
-		res.render('routine/show', { routine, username, loggedIn, userId })
-		
+			const { username, loggedIn, userId } = req.session
+			res.render('routine/show', { routine, username, loggedIn, userId })
+
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)

@@ -47,17 +47,17 @@ router.get('/random/', (req, res) => {
     const randomNumber = Math.floor((Math.random())* (20-1)+1)
 	console.log("the random number is ", randomNumber)
 	
-	Affirmation.find({ id: (randomNumber) })
+	Affirmation.find({ rando: (randomNumber) })
 	
 		.then(affirmation => {
-			console.log(affirmation)
+			console.log(affirmation[0])
 			const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
 			const picture = affirmation[0].picture
 			const id = affirmation[0].id
 			const altText = affirmation[0].altText
-console.log(picture, id, altText)
+			console.log(picture, id, altText)
             // res.json({ affirmation: affirmation })
             res.render('affirmation/random', { picture, id, altText, username, loggedIn, userId })
 		})
