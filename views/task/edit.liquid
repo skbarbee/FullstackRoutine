@@ -1,45 +1,29 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-<div class="container-sm">
-    
-   
-    <form action="/task/{{ routine.id }}/{{theTask.id}}?_method=PUT" method="POST">
-        <fieldset>
-            <legend>Add a task to your routine</legend>
-         
-            <label class="form-label">To Do:</label>
-            <input 
-                type="text" 
-                name="task" 
-                placeholder="enter task" 
-                class="form-control"
-                value="{{theTask.task}}"
-            >
-            <label class="form-label">Type of Routine:</label>
-            <input 
-                type="text" 
-                name="type" 
-                placeholder="Daily or Weekly"
-                class="form-control"
-                value="{{theTask.type}}"
-            > 
-            <label class="form-label">Complete:</label>
-            <input 
-                type="checkbox" 
-                name="complete" 
-                class="form-check-input"
-                {% if theTask.complete %}
-                 checked
-                 {% endif %}
-                
 
-            > 
-        </fieldset>
-        
-      
-    
-        <input type="submit" value="Edit Your To-Do" class="btn btn-success">
-    </form>
+
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-8 col-xl-6">
+        <form action="/task/{{ routine.id }}/{{theTask.id}}?_method=PUT" method="POST">
+          <fieldset>
+            <h3>Add a task to your routine</h3>
+
+            <label class="form-label">To Do:</label>
+            <input type="text" name="task" placeholder="enter task" class="form-control" value="{{theTask.task}}">
+            <label class="form-label">Type of Routine:</label>
+            <input type="text" name="type" placeholder="Daily or Weekly" class="form-control" value="{{theTask.type}}">
+            <label class="form-label">Complete:</label>
+            <input type="checkbox" name="complete" class="form-check-input" {% if theTask.complete %} checked {% endif
+              %}>
+          </fieldset>
+
+
+
+          <input type="submit" value="Edit Your To-Do" class="btn btn-primary float-end">
+        </form>
+      </div>
     </div>
-</div>
-{% endblock %}
+  </div>
+
+{% endblock %}}

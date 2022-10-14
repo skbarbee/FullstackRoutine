@@ -1,14 +1,22 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 
-<header class="masthead">
-  <div class="container h-100 py-5">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 text-center">
-        <h1> Welcome {{username}} </h1>
-        <h2> {{altText}}</h2>
-     
+  <header class="masthead">
+    <div class="container h-100 py-5">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 text-center">
+          <h1>
+            {{username}}, repeat after me.
+          </h1>
+          <h2>
+            {{altText}}
+          </h2>
+          <img src="{{picture}}" class="" alt="{{altText}}">
+        </div>
+      </div>
+    </div>
+  </header>
 
-<img src="{{picture}}" class="" alt="{{altText}}">
-  
-{% endblock %}
+ 
+
+{% endblock %}}

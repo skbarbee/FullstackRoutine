@@ -9,17 +9,34 @@ body{
 	background-attachment: fixed;
  	background-position: center ;
  	background-size: cover;
-	font-family: 'Acme', sans-serif
+	font-family: 'Acme', sans-serif;
 
 }
-.card-body{
+h1{
+	font-size: 70px;
+}
+.index{
+	color: rgb(123,172,142);
+	font-size: 70px;
+}
+h2{
+	font-family:'Dancing Script', cursive ;
+	font-size: 60px;
+}
+.card-body, .card-header{
 	color: white;
-	background-color: rgb(53,110,153);
+	background-color: rgb(123,172,142);
 	text-align: center;
 }
 
 .btn-info{
 	background-color: rgb(123,172,142) ;
+	color:azure;
+}
+span.badge.bg-info{
+	background: rgb(123,172,142);
+	background-color: rgb(123,172,142) ;
+	color:azure;
 }
 .btn-primary{
 	background-color: rgb(53,110,153);
@@ -29,11 +46,5 @@ body{
 	background-color: rgb(98,0,7);
 	border:rgb(98,0,7) ;
 }
-.btn-danger:hover{
-	background-color: rgb(98,0,7);
-	border:rgb(66,0,11);
-}
-span{
-	display: flex;
-	justify-self: flex-end
-}
+
+

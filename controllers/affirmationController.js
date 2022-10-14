@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 		.then(affirmations => {
 			// const username = req.session.username
 			// const loggedIn = req.session.loggedIn
-			res.json({affirmations:affirmations})
+			res.json({ affirmations: affirmations })
 			// res.render('examples/index', { examples, username, loggedIn })
 		})
 		.catch(error => {
@@ -42,24 +42,24 @@ router.get('/', (req, res) => {
 // index that shows random affirmation
 router.get('/random/', (req, res) => {
 	const username = req.session.username
-    const loggedIn = req.session.loggedIn
-    const userId = req.session.userId
-    const randomNumber = Math.floor((Math.random())* (20-1)+1)
+	const loggedIn = req.session.loggedIn
+	const userId = req.session.userId
+	const randomNumber = Math.floor((Math.random()) * (20 - 1) + 1)
 	console.log("the random number is ", randomNumber)
-	
+
 	Affirmation.find({ rando: (randomNumber) })
-	
+
 		.then(affirmation => {
 			console.log(affirmation[0])
 			const username = req.session.username
-            const loggedIn = req.session.loggedIn
-            const userId = req.session.userId
+			const loggedIn = req.session.loggedIn
+			const userId = req.session.userId
 			const picture = affirmation[0].picture
 			const id = affirmation[0].id
 			const altText = affirmation[0].altText
 			console.log(picture, id, altText)
-            // res.json({ affirmation: affirmation })
-            res.render('affirmation/random', { picture, id, altText, username, loggedIn, userId })
+			// res.json({ affirmation: affirmation })
+			res.render('affirmation/random', { picture, id, altText, username, loggedIn, userId })
 		})
 		.catch(error => {
 			// res.redirect(`/error?error=${error}`)
@@ -69,24 +69,24 @@ router.get('/random/', (req, res) => {
 
 router.get('/picture', (req, res) => {
 	const username = req.session.username
-    const loggedIn = req.session.loggedIn
-    const userId = req.session.userId
-    const randomNumber = Math.floor((Math.random())* (20-1)+1)
+	const loggedIn = req.session.loggedIn
+	const userId = req.session.userId
+	const randomNumber = Math.floor((Math.random()) * (20 - 1) + 1)
 	console.log("the random number is ", randomNumber)
-	
+
 	Affirmation.find({ id: (randomNumber) })
-	
+
 		.then(affirmation => {
 			console.log(affirmation)
 			const username = req.session.username
-            const loggedIn = req.session.loggedIn
-            const userId = req.session.userId
+			const loggedIn = req.session.loggedIn
+			const userId = req.session.userId
 			const picture = affirmation[0].picture
 			const id = affirmation[0].id
 			const altText = affirmation[0].altText
-console.log(picture, id, altText)
-            // res.json({ affirmation: affirmation })
-            res.render({ picture, id, altText, username, loggedIn, userId })
+			console.log(picture, id, altText)
+			// res.json({ affirmation: affirmation })
+			res.render({ picture, id, altText, username, loggedIn, userId })
 		})
 		.catch(error => {
 			// res.redirect(`/error?error=${error}`)

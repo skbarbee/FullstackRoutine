@@ -1,6 +1,8 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-  <div class="container-sm">
+<div class="container h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col col-lg-8 col-xl-6">
     <form action="/task/new/{{ routine.id }}" method="POST">
       <fieldset>
         <legend>Add a task to your routine</legend>
@@ -12,7 +14,9 @@
         <label class="form-label">Complete:</label>
         <input type="checkbox" name="complete" class="form-check-input">
       </fieldset>
-      <input type="submit" value="Create New Routine" class="btn btn-success">
+      <div class="container float-end">
+      <input type="submit" value="Create New Routine" class="btn btn-info ">
+    </div>
     </form>
   </div>
 {% endblock %}}

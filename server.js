@@ -31,14 +31,14 @@ middleware(app)
 ////////////////////
 
 app.use('/auth', UserRouter)
-app.use('/routine',RoutineRouter)
+app.use('/routine', RoutineRouter)
 app.use('/task', TaskRouter)
 app.use('/affirmation', AffirmationRouter)
 
 
 app.get('/', (req, res) => {
     const { username, userId, loggedIn } = req.session
-	res.render('index.liquid', { loggedIn, username, userId })
+    res.render('index.liquid', { loggedIn, username, userId })
 })
 
 // app.get('/error', (req, res) => {

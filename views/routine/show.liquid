@@ -1,52 +1,57 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 
-<header class="masthead">
-  <div class="container h-100 py-5">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 text-center">
-        <h1>{{username}}'s {{routine.title}}</h1>
+  <header class="masthead">
+    <div class="container h-100 py-5">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 text-center">
+          <h1>{{username}}
+            's
+            {{routine.title}}
+          </h1>
         </div>
+      </div>
     </div>
-</div>
-</header>
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-8 col-xl-6">
-                <div class="card rounded-3">
-                    <h2 class="card-header text-align-center">{{routine.title}}</h2>
-                {% for task in routine.listItems %}
-                <ul class="list-group rounded-0">
-                    <li class="list-group-item border-1  align-items-center ps-2">
-                    <input  class="form-check-input me-1" type="checkbox" value="" aria-label="..." 
-                         {%if task.complete%} checked{% endif %} >
-                    {%if task.complete%}
-                        <s>{{task.task}}</s>
-                    {% else %}
-                        {{task.task}}
-                    {% endif %}
-                    {% if task.complete%}
-                    {%else%}
+  </header>
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-8 col-xl-6">
+        <div class="card rounded-3">
+          <h2 class="card-header text-align-center" style="font-family:Acme">{{routine.title}}
+          </h3>
+          {% for task in routine.listItems %}
+            <ul class="list-group rounded-0">
+              <li class="list-group-item border-1  align-items-center ps-4">
+                {%if task.complete%}
+                  <s>{{task.task}}
+                  </s>
+                {% else %}
+                  {{task.task}}
+                {% endif %}
+                {% if task.complete%}
+                  {%else%}
                     <span class="badge bg-danger">not done</span>
-                    {% endif %}
-                    <a href="/task/edit/{{routine.id}}/{{task.id}}" class="badge btn-primary  offset-md-5">edit task</a>
-                    </li>
-                </ul>
-              {% endfor %}
-            </div>
-            
-            {% if routine.owner == userId %}
-            <container>
-            <div class="btn-group py-4 col-md-4 offset-md-9">
-                <a href="/routine/edit/{{ routine.id }}" class="btn btn-primary">new To-Do</a>
-                <form action="/routine/{{ routine.id }}?_method=DELETE" method="POST">
-                <input type="submit" value="Delete" class="btn btn-danger">
-                </form>
-            </container>
-            </div>
-         {% endif %}
+                {% endif %}
+                <a href="/task/edit/{{routine.id}}/{{task.id}}" class="badge btn-primary float-end">edit
+                                                                task</a>
+              </li>
+            </ul>
+          {% endfor %}
         </div>
-    </div>
-  
 
-{% endblock %}
+        {% if routine.owner == userId %}
+           
+            <div class="btn-group d-flex justify-content-between my-3">
+              <a href="/routine/mine" class="btn btn-info ">Go Back to Routines</a>
+              <a href="/routine/edit/{{ routine.id }}" class="btn btn-primary">Add a To-Do</a>
+            </div>
+            <form action="/routine/{{ routine.id }}?_method=DELETE" method="POST">
+              <input type="submit" value="Delete {{routine.title}}" class="btn btn-danger float-end">
+            </form>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+
+{% endblock %}}}}

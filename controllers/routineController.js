@@ -61,7 +61,7 @@ const getRandomAffirmation = () => {
 }
 const getUserRoutines = (user) => {
 	return new Promise((res, rej) => {
-		
+
 		Routine.find({ owner: user }, (err, doc) => {
 			if (err) rej(err)
 			res(doc)
@@ -85,30 +85,30 @@ router.get('/mine', (req, res) => {
 			routines = data[1]
 			// console.log(picture, id, altText)
 			// console.log(data[1])
-			res.render('routine/index', {routines , username, loggedIn, userId, picture, id, altText })
-			
-		})
-		
-		
-			
-			// console.table(affirmation)
-// 			console.table(routines)
-// 			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText }))
-		
-		.catch(error => console.error)
-// 
-			
-// 			const picture = affirmation[0][0].picture
-// 			const id = affirmation[0][0].rando
-// 			const altText = affirmation[0][0].altText
-// 			// console.log(picture, id, altText)
-// 			console.table(affirmation)
-// 			console.table(routines)
-// 			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText })
-// 		})
+			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText })
 
-// 		// or throw an error if there is one
-// 		.catch(err => res.redirect(`/error?error=${err}`))
+		})
+
+
+
+		// console.table(affirmation)
+		// 			console.table(routines)
+		// 			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText }))
+
+		.catch(error => console.error)
+	// 
+
+	// 			const picture = affirmation[0][0].picture
+	// 			const id = affirmation[0][0].rando
+	// 			const altText = affirmation[0][0].altText
+	// 			// console.log(picture, id, altText)
+	// 			console.table(affirmation)
+	// 			console.table(routines)
+	// 			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText })
+	// 		})
+
+	// 		// or throw an error if there is one
+	// 		.catch(err => res.redirect(`/error?error=${err}`))
 
 })
 

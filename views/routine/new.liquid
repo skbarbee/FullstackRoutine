@@ -1,19 +1,19 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-<div class="container-sm">
-    <form action="/routine/" method="POST">
-        <fieldset>
-            <legend>Create New Routine</legend>
-            <label class="form-label">Title: </label>
-            <input 
-                type="text" 
-                name="title" 
-                placeholder="enter example title"
-                class="form-control"
-            >
-        
-        </fieldset>
-        <input type="submit" value="Create New Routine" class="btn btn-success">
-    </form>
+<div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-8 col-xl-6">
+            <form action="/routine/" method="POST">
+                <fieldset>
+                    <h3>Create New Routine</h3>
+                    <label class="form-label">Title:
+                    </label>
+                    <input type="text" name="title" placeholder="enter example title" class="form-control">
+
+                </fieldset>
+                <input type="submit" value="Create New Routine" class="btn btn-primary float-end">
+            </form>
+        </div>
+    </div>
 </div>
-{% endblock %}
+{% endblock %}}
