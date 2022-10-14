@@ -1,63 +1,69 @@
 {% layout 'layout.liquid'%}
 {% block content %}
 
-<header class="masthead">
-  <div class="container h-100 py-5">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 text-center">
-        <h1> Welcome {{username}}</h1>
+  <header class="masthead">
+    <div class="container h-100 py-5">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 text-center">
+          <h1>
+            Welcome
+            {{username}}
+          </h1>
+        </div>
       </div>
     </div>
-  </div>
-</header>
-<div class = "task-image">
-<div class="container-xl h-100 py-2 d-flex" id="pageContainer">
-{%- comment -%} affirmation and weather container {%- endcomment -%}
-  <div class="d-flex flex-column bd-highlight mb-3">
-    <div class="p-2 bd-highlight"><img src="{{picture}}" class="" alt="{{altText}}"></div>
-    <div class="p-2 bd-highlight">Weather</div>
-  </div>
-  {%- comment -%} card container {%- endcomment -%}
-  <div class="d-flex flex-grow-1 justify-content-end">
-   
-        {% for routine in routines %}
-         <div class="container flex-fill">
-            
-           
-            <div class="card rounded-3 col">
-                <h5 class="card-body p-2">{{routine.title}}</h5>
-                {% for task in routine.listItems %}
-                <ul class="list-group rounded-0">
-               <li class="list-group-item border-1  align-items-center ps-2">
-                <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." 
-                  {%if task.complete%}
-                checked
-                {% endif %} >
+  </header>
+
+  <div class="container-xl h-100 py-2 d-flex" id="pageContainer">
+    {%- comment -%}
+      affirmation and weather container
+    {%- endcomment -%}
+    <div class="d-flex flex-column bd-highlight mb-3">
+      <div class="p-2 bd-highlight"><img src="{{picture}}" class="" alt="{{altText}}"></div>
+      <div class="p-2 bd-highlight">Weather</div>
+    </div>
+    {%- comment -%}
+      card container
+    {%- endcomment -%}
+
+
+    {% for routine in routines %}
+      <div class="container ">
+
+
+        <div class="card rounded-4 col">
+          <h5 class="card-body ">{{routine.title}}
+          </h5>
+          {% for task in routine.listItems %}
+            <ul class="list-group rounded-0">
+              <li class="list-group-item border-1  align-items-center ps-2">
+                <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." {%if task.complete%} checked
+                  {% endif %}>
                 {%if task.complete%}
-                <s>{{task.task}}</s>
+                  <s>{{task.task}}
+                  </s>
                 {% else %}
-                {{task.task}}
+                  {{task.task}}
                 {% endif %}
                 {% if task.complete%}
-                
-                
-                {%else%}
-                <span
-                class="badge bg-danger">not done</span>
+
+
+                  {%else%}
+                    <span class="badge bg-danger justify-item-flex-end">not done</span>
                 {% endif %}
               </li>
-                </ul>
-              {% endfor %}
-                    <a class="btn btn-info" href="/routine/{{routine.id}}">
-                        View {{routine.title}}  </a>
-                    
-            </div>
-         </div>    
-    {% endfor %}
-    </div>
-    </div>
-    </div>
-  </div>
-    
+            </ul>
+          {% endfor %}
+          <a class="btn btn-info py-2" href="/routine/{{routine.id}}">
+            View
+            {{routine.title}}
+          </a>
 
-{% endblock %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+
+
+{% endblock %}}

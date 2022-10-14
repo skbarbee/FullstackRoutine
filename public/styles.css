@@ -12,7 +12,28 @@ body{
 	font-family: 'Acme', sans-serif
 
 }
+.card-body{
+	color: white;
+	background-color: rgb(53,110,153);
+	text-align: center;
+}
 
 .btn-info{
 	background-color: rgb(123,172,142) ;
+}
+.btn-primary{
+	background-color: rgb(53,110,153);
+}
+
+.btn-danger{
+	background-color: rgb(98,0,7);
+	border:rgb(98,0,7) ;
+}
+.btn-danger:hover{
+	background-color: rgb(98,0,7);
+	border:rgb(66,0,11);
+}
+span{
+	display: flex;
+	justify-self: flex-end
 }
