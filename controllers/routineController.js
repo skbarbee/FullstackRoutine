@@ -55,7 +55,7 @@ router.get('/mine', (req, res) => {
     // find the routines, by ownership
 	
     Routine.find({ owner: req.session.userId })
-	.populate("listItems")
+	// .populate("listItems")
 	
     // then display the routines
         .then(routines => {
