@@ -50,22 +50,43 @@ router.get('/', (req, res) => {
 ///////////////////////////////
 ///// INDEX USER: GET REQUEST
 ///////////////////////////////
+function getAffirmation(number){
+	console.log(`this function called id: ${number}}`)
+	Affirmation.find({ id: (number) })
 
+	.then(affirmation => {
+		const picture = affirmation[0].picture
+		const id = affirmation[0].id
+		const altText = affirmation[0].altText
+		console.log(`${JSON.stringify(affirmation)}`)
+		return (affirmation)
+	})
+
+	.catch(error => {
+		
+		console.log(error)
+
+	})
+}
 router.get('/mine', (req, res) => {
     // find the routines, by ownership
 	
     Routine.find({ owner: req.session.userId })
-	// .populate("listItems")
+	
 	
     // then display the routines
+	
         .then(routines => {
             const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
-
-            // res.status(200).json({ routines: routines })
-            res.render('routine/index', { routines, username, loggedIn, userId })
+			const randomNumber = Math.floor((Math.random())* (20-1)+1)
+			const randomAff =  getAffirmation(randomNumber)
+			// console.log(`this is the function within the route ${JSON.stringify(randomAff)}`)
+            // res.send({ routines: routines})
+            res.render('routine/index', { routines, username, loggedIn, userId, randomAff})
         })
+		
     // or throw an error if there is one
         .catch(err => res.redirect(`/error?error=${err}`))
 		
@@ -80,6 +101,8 @@ router.get('/new', (req, res) =>
 	const { username, userId, loggedIn } = req.session
 	res.render('routine/new', { username, loggedIn })
 })
+
+
 ///////////////////////////////
 ///// CREATE NEW ROUTINE: POST ROUTE
 ///////////////////////////////
