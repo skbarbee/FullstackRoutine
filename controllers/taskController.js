@@ -26,7 +26,7 @@ router.get("/edit/:routineId/:taskId", (req, res) => {
     const username = req.session.username
     const loggedIn = req.session.loggedIn
     const userId = req.session.userId
-	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
+	
     const routineId= req.params.routineId
 	const taskId = req.params.taskId
 	console.log("edit request called")
@@ -34,7 +34,9 @@ router.get("/edit/:routineId/:taskId", (req, res) => {
     Routine.findById(routineId)
         // render the edit form 
         .then(routine => {
-            res.render('task/edit', { routine, username, loggedIn, userId, theTask })
+			const theTask = routine.listItems.id(taskId)
+			console.log(theTask)
+            res.render('task/edit', { routine, username, loggedIn, userId, taskId,theTask })
         })
         // redirect if there isn't
         .catch(err => {
@@ -87,7 +89,7 @@ router.put('/:routineId/:taskId', (req, res) => {
 	Routine.findById(routineId)
 		.then(routine => {
 			const theTask = routine.listItems.id(taskId)
-			// console.log('this is the task that was found',theTask)
+			console.log('this is the task that was found',theTask)
 			theTask.set(req.body)
 			routine.save()
 			res.redirect(`/routine/${routineId}`)
