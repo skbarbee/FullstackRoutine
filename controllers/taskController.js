@@ -47,7 +47,7 @@ router.get("/edit/:routineId/:taskId", (req, res) => {
 ///////////////////////////////
 
 //find routine by Id then CREATE a new task 
-router.post('/:id', (req, res) => {
+router.post('/new/:id', (req, res) => {
 	const routineId= req.params.id
 	req.body.complete = req.body.complete === 'on' ? true : false
 	req.body.owner = req.session.userId

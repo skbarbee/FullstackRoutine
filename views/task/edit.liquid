@@ -1,7 +1,8 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 <div class="container-sm">
-    {%- comment -%} {%for task in routine.listItems%} {%- endcomment -%}
+    {%for task in routine.listItems%}
+    {%- comment -%} {% if task.id %} {%- endcomment -%}
     <form action="/task/{{ routine.id }}/{{task.id}}?_method=PUT" method="POST">
         <fieldset>
             <legend>Add a task to your routine</legend>
@@ -34,7 +35,8 @@
 
             > 
         </fieldset>
-        {%- comment -%} {% endfor %} {%- endcomment -%}
+        {% endfor %}
+    {%- comment -%} {% endif %} {%- endcomment -%}
         <input type="submit" value="Edit Your To-Do" class="btn btn-success">
     </form>
     </div>

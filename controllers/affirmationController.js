@@ -50,15 +50,16 @@ router.get('/random/', (req, res) => {
 	Affirmation.find({ id: (randomNumber) })
 	
 		.then(affirmation => {
+			console.log(affirmation)
 			const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
-			const picture = affirmation.picture
-			const id = affirmation.id
-			const altText = affirmation.altText
-
-            res.json({ affirmation: affirmation })
-            // res.render('affirmation/random', { picture, id, altText, username, loggedIn, userId })
+			const picture = affirmation[0].picture
+			const id = affirmation[0].id
+			const altText = affirmation[0].altText
+console.log(picture, id, altText)
+            // res.json({ affirmation: affirmation })
+            res.render('affirmation/random', { picture, id, altText, username, loggedIn, userId })
 		})
 		.catch(error => {
 			// res.redirect(`/error?error=${error}`)
