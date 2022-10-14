@@ -12,7 +12,7 @@ const affirmationSchema = new Schema(
 	{
 		picture: { type: String, required: true },
 		altText:{ type: String, required: true},
-		id: {type: Number, required: true}
+		rando: {type: Number, required: true}
 		
 	}
 )
