@@ -1,6 +1,6 @@
-# fly.toml file generated for icy-resonance-1880 on 2022-10-17T13:41:39-04:00
+# fly.toml file generated for dailyroutine on 2022-10-17T15:54:29-04:00
 
-app = "icy-resonance-1880"
+app = "dailyroutine"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -10,7 +10,7 @@ processes = []
 
 [env]
   PORT = "8080"
-  SECRET="ABCItseasyas123assimpleasDoremiABC123Babyyouandmegirl"
+  SECRET = "ABCItseasyas123assimpleasDoremiABC123Babyyouandmegirl"
   API_Key = "3a5c3bd258074720959306dbeeed9df6"
 	DEPLOYED_URL= "mongodb+srv://Sarah:simplePass@gasei.9u3hy4w.mongodb.net/dailyroutine?retryWrites=true&w=majority"
 
