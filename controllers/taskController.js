@@ -91,6 +91,7 @@ router.put('/:routineId/:taskId', (req, res) => {
 			const theTask = routine.listItems.id(taskId)
 			console.log('this is the task that was found',theTask)
 			theTask.set(req.body)
+			console.log(req.body)
 			routine.save()
 			res.redirect(`/routine/${routineId}`)
 		})

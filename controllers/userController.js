@@ -4,6 +4,7 @@
 const express = require('express')
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+const  axios  = require('axios')
 
 ////////////////////////////////////////////
 // Create router
@@ -39,7 +40,43 @@ router.post('/signup', async (req, res) => {
 		})
 })
 
+// const getUserZip = (userName) => {
+// 	return new Promise((res, rej) => {
+
+// 		User.find({ username: userName }, (err, doc) => {
+// 			if (err) rej(err)
+// 			res(doc)
+// 		})
+// 	})
+// }
+router.get('/weather', (req, res) => {
+	const username = req.session.username
+	const loggedIn = req.session.loggedIn
+	const userId = req.session.userId
+	const zipCode = req.session.zipCode
+	console.log(zipCode)
+    axios(`http://api.weatherbit.io/v2.0/current?postal_code=${zipCode}&country=US&Key=${process.env.API_Key}&units=I`)
+    .then(weatherJson => {
+		const data= weatherJson.data.data
+		const weatherTable = data.data[0].weather
+		const temp = data.data[0].app_temp
+		const cityName = data.data[0].city_name
+		const time = data.data[0].ob_time
+		console.log('this is weatherTable \n',weatherTable, "this is temp \n", temp)
+		//console.log("this is info", info)
+    	res.send(weatherJson.data)
+        //res.render('auth/weather', { data,cityName, zipCode, weatherTable, temp, username, loggedIn, userId,time  })
+    })
+   
+    .catch((error) => {
+       console.log(error)
+    })
+
+})
+///////////////////////////////
 // two login routes
+///////////////////////////////
+
 // get to render the login form
 router.get('/login', (req, res) => {
 	res.render('auth/login')
@@ -67,8 +104,10 @@ router.post('/login', async (req, res) => {
 					req.session.username = user.username
 					req.session.loggedIn = true
 					req.session.userId = user.id
+					req.session.zipCode = user.zipCode
 
-          			const { username, loggedIn, userId } = req.session
+          			const { username, loggedIn, userId, zipCode } = req.session
+					console.log('the zip code', req.session.zipCode )
 
 					console.log('session user id', req.session.userId)
 					// redirect to /examples if login is successful

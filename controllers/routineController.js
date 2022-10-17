@@ -6,6 +6,7 @@ const Affirmation = require("../models/affirmation")
 
 // Create router
 const router = express.Router()
+const axios = require('axios')
 
 // Router Middleware
 // Authorization middleware
@@ -68,20 +69,28 @@ const getUserRoutines = (user) => {
 		})
 	})
 }
+const getUserWeather = (zipCode) => {
+	return new Promise((res, rej) => {
+	axios(`http://api.weatherbit.io/v2.0/current?postal_code=${zipCode}&country=US&Key=${process.env.API_Key}&units=I`)
+		if (err) rej(err)
+		res(doc)
+		
+	})
+}
 
 router.get('/mine', (req, res) => {
-	// find the routines, by ownership
-	// let affirmation = []
-	// let routines = []
+
 	const username = req.session.username
 	const loggedIn = req.session.loggedIn
 	const userId = req.session.userId
+	const userZip = req.session.zipCode
 
 	Promise.all([getRandomAffirmation(), getUserRoutines(userId)])
 		.then(data => {
 			const picture = data[0][0].picture
 			const id = data[0][0].rando
 			const altText = data[0][0].altText
+
 			routines = data[1]
 			// console.log(picture, id, altText)
 			// console.log(data[1])
@@ -89,26 +98,9 @@ router.get('/mine', (req, res) => {
 
 		})
 
-
-
-		// console.table(affirmation)
-		// 			console.table(routines)
-		// 			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText }))
-
 		.catch(error => console.error)
 	// 
 
-	// 			const picture = affirmation[0][0].picture
-	// 			const id = affirmation[0][0].rando
-	// 			const altText = affirmation[0][0].altText
-	// 			// console.log(picture, id, altText)
-	// 			console.table(affirmation)
-	// 			console.table(routines)
-	// 			res.render('routine/index', { routines, username, loggedIn, userId, picture, id, altText })
-	// 		})
-
-	// 		// or throw an error if there is one
-	// 		.catch(err => res.redirect(`/error?error=${err}`))
 
 })
 
