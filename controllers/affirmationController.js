@@ -62,8 +62,8 @@ router.get('/random/', (req, res) => {
 			res.render('affirmation/random', { picture, id, altText, username, loggedIn, userId })
 		})
 		.catch(error => {
-			// res.redirect(`/error?error=${error}`)
-			res.send(error)
+			res.redirect(`/error?error=${error}`)
+			
 		})
 })
 
@@ -89,8 +89,8 @@ router.get('/picture', (req, res) => {
 			res.render({ picture, id, altText, username, loggedIn, userId })
 		})
 		.catch(error => {
-			// res.redirect(`/error?error=${error}`)
-			res.send(error)
+			res.redirect(`/error?error=${error}`)
+			//res.send(error)
 		})
 })
 

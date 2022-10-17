@@ -1,34 +1,36 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-<section class="vh-100" style="background-color: #4B515D;">
+<section class="vh-100">
   <div class="container py-5 h-100">
 
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="rounded-circle">
+          <div style="background-color: rgb(53,110,153);color:white; border-radius: 35px;">
+            <div class="card-body p-4" style="background-color: rgb(53,110,153);">
 
-        <div class="card" style="color: #4B515D; border-radius: 35px;">
-          <div class="card-body p-4">
 
-            <div class="d-flex">
-              <h6 class="flex-grow-1">{{cityName}}</h6>
-              <h6>{{time}}</h6>
-            </div>
-
-            <div class="d-flex flex-column text-center mt-5 mb-4">
-              <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> {{temp}} </h6>
-              <span class="small" style="color: #868B94">{{weatherTable.description}}</span>
-            </div>
-
-            <div class="d-flex align-items-center">
-              <div class="flex-grow-1" style="font-size: 1rem;">
-                <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1"> {{windSpeed}} m/h {{windCardnial}}
-                  </span></div>
-                <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1"> {{precipitation}} </span>
-                </div>
+              <div class="d-flex">
+                <h6 class="flex-grow-1">City Name: {{cityName}}</h6>
+                <h6>Observation Time: {{time}}</h6>
               </div>
-              <div>
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu1.webp"
-                  width="100px">
+
+              <div class="d-flex flex-column text-center mt-5 mb-4">
+                <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> {{temp}} °F </h6>
+                <span class="small" style="color: white">{{weatherTable.description}}</span>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1" style="font-size: 1rem;">
+                  <div><i class="" style="color: white;"></i> <span class="ms-1"> Wind: {{windSpeed}} m/h
+                      {{windCardnial}}
+                    </span></div>
+                  <div><i class="" style="color: white;"></i> <span class="ms-1"> Chance of
+                      Precipitation: {{precipitation}} </span>
+                  </div>
+                </div>
+                <div>
+                </div>
               </div>
             </div>
 
@@ -40,6 +42,6 @@
 
   </div>
 </section>
- 
+
 
 {% endblock %}}

@@ -98,7 +98,10 @@ router.get('/mine', (req, res) => {
 
 		})
 
-		.catch(error => console.error)
+		.catch(error => {
+			res.redirect(`/error?error=${error}`)
+			//console.log(error)
+		})
 	// 
 
 
@@ -131,8 +134,8 @@ router.post('/', (req, res) => {
 
 		})
 		.catch(error => {
-			// res.redirect(`/error?error=${error}`)
-			console.log(error)
+			res.redirect(`/error?error=${error}`)
+			//console.log(error)
 		})
 })
 
@@ -203,8 +206,8 @@ router.delete('/:id', (req, res) => {
 			res.redirect('/routine/mine')
 		})
 		.catch(error => {
-			// res.redirect(`/error?error=${error}`)
-			res.send(error)
+			res.redirect(`/error?error=${error}`)
+			// res.send(error)
 		})
 })
 ////////////////////////////////////////////////////////////////////////////////////////////////

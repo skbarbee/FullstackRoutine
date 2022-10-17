@@ -35,8 +35,8 @@ router.post('/signup', async (req, res) => {
 		})
 		// if an error occurs, send err
 		.catch((error) => {
-			// res.redirect(`/error?error=${error}`)
-			console.log(error)
+			res.redirect(`/error?error=${error}`)
+			//console.log(error)
 		})
 })
 
@@ -58,14 +58,18 @@ router.get('/weather', (req, res) => {
     axios(`http://api.weatherbit.io/v2.0/current?postal_code=${zipCode}&country=US&Key=${process.env.API_Key}&units=I`)
     .then(weatherJson => {
 		const data= weatherJson.data.data
-		const weatherTable = data.data[0].weather
-		const temp = data.data[0].app_temp
-		const cityName = data.data[0].city_name
-		const time = data.data[0].ob_time
-		console.log('this is weatherTable \n',weatherTable, "this is temp \n", temp)
+		// const weatherTable = data.data[0]
+		const temp = data[0].app_temp
+		const weatherTable = data[0].weather
+		const cityName = data[0].city_name
+		const windSpeed = data[0].wind_spd
+		const time = data[0].ob_time
+		const windCardnial = data[0].wind_cdir
+		const precipitation = data[0].precip
+		console.log("this is temp \n", temp, "this is the weeatherTable")
 		//console.log("this is info", info)
-    	res.send(weatherJson.data)
-        //res.render('auth/weather', { data,cityName, zipCode, weatherTable, temp, username, loggedIn, userId,time  })
+    	//res.send(weatherJson.data)
+        res.render('auth/weather', { data,cityName, zipCode, temp, username, loggedIn, userId,time,windCardnial, windSpeed, precipitation, weatherTable  })
     })
    
     .catch((error) => {
