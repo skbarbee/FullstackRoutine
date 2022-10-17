@@ -1,6 +1,6 @@
-# fly.toml file generated for icy-resonance-1880 on 2022-10-17T13:41:39-04:00
+# fly.toml file generated for dailyroutine on 2022-10-17T13:41:39-04:00
 
-app = "icy-resonance-1880"
+app = "dailyroutine"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
