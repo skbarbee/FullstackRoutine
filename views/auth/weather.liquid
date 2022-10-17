@@ -6,21 +6,20 @@
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-8 col-lg-6 col-xl-4">
         <div class="rounded-circle">
-          <div style="background-color: rgb(53,110,153);color:white; border-radius: 35px;">
+          <div style="background-color: rgb(53,110,153);color: white;">
             <div class="card-body p-4" style="background-color: rgb(53,110,153);">
-
-
-              <div class="d-flex">
-                <h6 class="flex-grow-1">City Name: {{cityName}}</h6>
-                <h6>Observation Time: {{time}}</h6>
+              <div class="justify-content-start row d-flex">
+                <h5 class="flex-grow-1">City Name: {{cityName}}</h5>
+                <h5>Observation Time: {{time}}</h4>
               </div>
+             
 
               <div class="d-flex flex-column text-center mt-5 mb-4">
-                <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> {{temp}} °F </h6>
-                <span class="small" style="color: white">{{weatherTable.description}}</span>
+                <h1 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> {{temp}} °F </h1>
+                <span class="small mt-0" style="color: white">{{weatherTable.description}}</span>
               </div>
 
-              <div class="d-flex align-items-center">
+              <div class="d-flex justify-content-start align-items-center ">
                 <div class="flex-grow-1" style="font-size: 1rem;">
                   <div><i class="" style="color: white;"></i> <span class="ms-1"> Wind: {{windSpeed}} m/h
                       {{windCardnial}}
