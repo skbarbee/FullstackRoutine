@@ -15,23 +15,21 @@
 </header>
 
 <div class="container-xl h-100 d-flex" id="pageContainer">
-  {%- comment -%}
-  affirmation and weather container
-  {%- endcomment -%}
-  <div class="d-flex flex-column bd-highlight ">
-    <div class=" bd-highlight"><img src="{{picture}}" class="" alt="{{altText}}"></div>
-    <div class="p-1 bd-highlight">Weather</div>
-  </div>
-  {%- comment -%}
-  card container
-  {%- endcomment -%}
+  <div class="row">
+    
+    <div class="col"><img src="{{picture}}" class="" alt="{{altText}}">
+    <img src="../weather.svg" alt-text="clickhere for weather">
+  </div> 
+    
+   
+    <div class="col-7">
+      <div class="container-fluid">
+      <div class="row flex-wrap">
+        
+        {% for routine in routines %}
 
-
-  {% for routine in routines %}
-  <div class="container ">
-
-
-    <div class="card rounded-4 col mb-2">
+        <div class="col-6">
+    <div class="card rounded-4 my-2">
       <h5 class="card-body ">{{routine.title}}
         <span class="badge rounded-pill bg-secondary"> <a class="link-light" href="/routine/{{routine.id}}">
           View
@@ -60,7 +58,63 @@
     
   </div>
   {% endfor %}
+</div> 
 </div>
+      </div>
+    </div>
+ </div>
+</div>
+
+  {%- comment -%} <div class="d-flex flex-column bd-highlight ">
+    <div class=" bd-highlight"><img src="{{picture}}" class="" alt="{{altText}}"></div>
+    <div class="p-1 bd-highlight"> 
+            <div class="mask" style="background-color: rgb(53,110,153)">
+              <div class="text-center text-white">
+                <p class="h3 mb-4">Clear night</p>
+                <p class="h5 mb-4">Detroit, US</p>
+                <p class="display-2"><strong>20°C</strong> </p>
+              </div>
+            </div>
+          </div></div>
+  </div> {%- endcomment -%}
+  {%- comment -%}
+  card container
+  {%- endcomment -%}
+
+  {%- comment -%} {% for routine in routines %}
+  <div class="container flex-column ">
+
+
+    <div class="card rounded-4 col flex-grow mb-2">
+      <h5 class="card-body ">{{routine.title}}
+        <span class="badge rounded-pill bg-secondary"> <a class="link-light" href="/routine/{{routine.id}}">
+          View
+        </a>  </span>
+    </h5>
+      {% for task in routine.listItems %}
+      <ul class="list-group rounded-0">
+        <li class="list-group-item border-1  align-items-center ps-4">
+          {%if task.complete%}
+          <s>{{task.task}}
+          </s>
+          {% else %}
+          {{task.task}}
+          {% endif %}
+          {% if task.complete%}
+
+
+          {%else%}
+          <span class="badge bg-danger justify-item-flex-end">not done</span>
+          {% endif %}
+        </li>
+      </ul>
+      {% endfor %}
+    </div>
+      
+    
+  </div>
+  {% endfor %} {%- endcomment -%}
+
 
 
 

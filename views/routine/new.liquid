@@ -6,10 +6,13 @@
             <form action="/routine/" method="POST">
                 <fieldset>
                     <h3>Create New Routine</h3>
-                    <label class="form-label">Title:
-                    </label>
-                    <input type="text" name="title" placeholder="enter example title" class="form-control">
-
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Title:
+                        </label>
+                        <div class="col-sm-9 mb-3">
+                            <input type="text" name="title" placeholder="enter example title" class="form-control">
+                        </div>
+                    </div>
                 </fieldset>
                 <input type="submit" value="Create New Routine" class="btn btn-primary float-end">
             </form>

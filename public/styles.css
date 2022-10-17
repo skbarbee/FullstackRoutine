@@ -23,6 +23,18 @@ h2{
 	font-family:'Dancing Script', cursive ;
 	font-size: 60px;
 }
+.col-sm-3{
+	font-size:20px;
+}
+legend{
+	font-size: 30px;
+	text-align: center;
+}
+.form-control{
+	background-color: rgb(123,172,142);
+	color:white;
+	font-size: 20px;
+}
 .card-body, .card-header{
 	color: white;
 	background-color: rgb(123,172,142);
@@ -32,6 +44,7 @@ h2{
 .btn-info{
 	background-color: rgb(123,172,142) ;
 	color:azure;
+
 }
 span.badge.bg-info{
 	background: rgb(123,172,142);
@@ -40,6 +53,7 @@ span.badge.bg-info{
 }
 .btn-primary{
 	background-color: rgb(53,110,153);
+	font-size: 20px;
 }
 
 .btn-danger{
