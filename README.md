@@ -2,6 +2,10 @@
 ## Overview
 This application is a full stack application where users can track their daily routines, as well as back weekly goals. On the index page they will also be able to see a daily affirmation and/or the daily weather for their area.
 
+## Deployed Link
+https://dailyroutine.fly.dev/
+
+
 ## User Stories
 As a user I want the ability to...
   - log in 
