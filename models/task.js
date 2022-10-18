@@ -13,6 +13,7 @@ const taskSchema = new Schema(
 		complete: { type: Boolean, default: false, required: true },
         type: { 
 			type: String,
+			// Love to see a enum here!!!
 			enum:  ['daily','weekly'],
 			required: true }
 		

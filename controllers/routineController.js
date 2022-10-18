@@ -1,5 +1,6 @@
 // Import Dependencies
 const express = require('express')
+// Nit: remove unused User import
 const User = require("../models/user")
 const Routine = require("../models/routine")
 const Affirmation = require("../models/affirmation")
@@ -32,12 +33,13 @@ router.use((req, res, next) => {
 ///////////////////////////////
 router.get('/', (req, res) => {
 	Routine.find({})
-
+		// Nit: choose either double or single quotes
 		.populate("listItems")
 
 		.then(routines => {
 			const username = req.session.username
 			const loggedIn = req.session.loggedIn
+			// Since this is going to be a boolean best practice for naming a boolean variable is like a question. Ex: here instead of `complete` we should call it `isComplete`. This just shows that is can hold either true or false
 			const complete = req.body.complete = req.body.complete === 'on' ? true : false
 			res.render('routine/index', { routines, username, loggedIn, complete })
 			// res.json({ routines:routines })
@@ -60,6 +62,8 @@ const getRandomAffirmation = () => {
 		})
 	})
 }
+
+// Wonderful job on taking a template and running with it!!!
 const getUserRoutines = (user) => {
 	return new Promise((res, rej) => {
 
@@ -69,6 +73,8 @@ const getUserRoutines = (user) => {
 		})
 	})
 }
+
+// Comment out if not using 
 const getUserWeather = (zipCode) => {
 	return new Promise((res, rej) => {
 	axios(`http://api.weatherbit.io/v2.0/current?postal_code=${zipCode}&country=US&Key=${process.env.API_Key}&units=I`)
@@ -83,6 +89,7 @@ router.get('/mine', (req, res) => {
 	const username = req.session.username
 	const loggedIn = req.session.loggedIn
 	const userId = req.session.userId
+	// Nit: remove unused var
 	const userZip = req.session.zipCode
 
 	Promise.all([getRandomAffirmation(), getUserRoutines(userId)])
@@ -110,6 +117,7 @@ router.get('/mine', (req, res) => {
 //new route -> GET route that renders our page with the form
 router.get('/new', (req, res) => {
 
+	// Nit: remove unused vars
 	const theTask = { task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId }
 	const theRoutine = { title: req.body.title, listItems: req.body.listItems }
 	const { username, userId, loggedIn } = req.session
@@ -126,7 +134,7 @@ router.post('/', (req, res) => {
 	req.body.owner = req.session.userId
 
 	Routine.create(req.body)
-
+		// Nit: remove unused `routine`
 		.then(routine => {
 			// 
 			res.redirect('/routine/mine')
@@ -140,12 +148,14 @@ router.post('/', (req, res) => {
 })
 
 // edit route -> GET that takes us to the edit form view
+// Nit: choose either double or single quotes
 router.get("/edit/:id", (req, res) => {
 	const username = req.session.username
 	const loggedIn = req.session.loggedIn
 	const userId = req.session.userId
 
 	const routineId = req.params.id
+	// Nit: remove console.log
 	console.log("this is the get edit in routine")
 	Routine.findById(routineId)
 		// render the edit form 
@@ -166,6 +176,7 @@ router.get("/edit/:id", (req, res) => {
 router.put('/:id', (req, res) => {
 	const routineId = req.params.id
 
+	// Nit: remove unused vars
 	const theTask = { task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId }
 	const theRoutine = { title: req.body.title, listItems: req.body.listItems }
 
@@ -202,6 +213,7 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 	const routineId = req.params.id
 	Routine.findByIdAndRemove(routineId)
+	// Nit: remove unused `routine`
 		.then(routine => {
 			res.redirect('/routine/mine')
 		})

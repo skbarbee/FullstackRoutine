@@ -1,10 +1,12 @@
 ////////////////////
 //  Dependencies  //
 ////////////////////
+// Nit: choose either double or single quotes
 require("dotenv").config() // make env variables available
 const express = require("express")
 const middleware = require('./utils/middleware')
 
+// Nit: Remove lines 10 through 13 they are unused imports
 const User = require("./models/user")
 const Task = require("./models/task")
 const Routine = require("./models/routine")
