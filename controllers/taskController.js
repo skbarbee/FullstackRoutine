@@ -1,5 +1,6 @@
 // Import Dependencies
 const express = require('express')
+// Nit: remove all unused imports
 const User = require("../models/user")
 const Task = require("../models/task")
 const Routine = require("../models/routine")
@@ -22,6 +23,7 @@ const router = express.Router()
 // 	}
 // })
 // edit route -> GET that takes us to the edit form view
+// Nit: choose either double or single quotes
 router.get("/edit/:routineId/:taskId", (req, res) => {
     const username = req.session.username
     const loggedIn = req.session.loggedIn
@@ -29,12 +31,14 @@ router.get("/edit/:routineId/:taskId", (req, res) => {
 	
     const routineId= req.params.routineId
 	const taskId = req.params.taskId
+	// Nit: remove console.logs
 	console.log("edit request called")
 	
     Routine.findById(routineId)
         // render the edit form 
         .then(routine => {
 			const theTask = routine.listItems.id(taskId)
+			// Nit: remove console.logs
 			console.log(theTask)
             res.render('task/edit', { routine, username, loggedIn, userId, taskId,theTask })
         })
@@ -53,6 +57,7 @@ router.post('/new/:id', (req, res) => {
 	const routineId= req.params.id
 	req.body.complete = req.body.complete === 'on' ? true : false
 	req.body.owner = req.session.userId
+	// Nit: remove unused `theTask` var
 	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.body.owner}
 	Routine.findById(routineId)
 		.then((routine) =>{
@@ -78,10 +83,11 @@ router.post('/new/:id', (req, res) => {
 ////EDIT exisiting Task: put ROUTE
 ///////////////////////////////
 router.put('/:routineId/:taskId', (req, res) => {
+	// Nit: remove console.log
 	console.log("the route was hit")
 	const routineId= req.params.routineId
 	const taskId = req.params.taskId
-	
+	// Nit: remove unused `theTask` var
 	const theTask = {task: req.body.task, complete: req.body.complete, type: req.body.type, owner: req.session.userId}
 	
 
